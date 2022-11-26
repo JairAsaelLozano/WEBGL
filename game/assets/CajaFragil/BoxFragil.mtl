@@ -1,0 +1,8 @@
+newmtl lambert4SG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+map_Kd vil_p_crate06_d.png
+bump  -bm 1 vil_p_crate06_n.png
+Ni 1.00
