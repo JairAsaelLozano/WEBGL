@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <!--<META HTTP-EQUIV="REFRESH" CONTENT="5;URL=menu.html"> -->
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <link rel="stylesheet" type="text/css" href="./main.css">
+
+</head>
+
+<body>
+    <div class="game-container">
+        <div class="barra-progreso">
+            <div class="progress">
+                <div id="myBar" class="progress-bar" style="width:0%;">
+                    <span class="progress-bar-text">0%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+    <script>
+      $(document).ready(function(){
+       
+   
+    const progressBar = document.getElementById('myBar');
+    const progresBarText = progressBar.querySelector('.progress-bar-text');
+    let percent = 0;
+    progressBar.style.width = percent + '%';
+    progresBarText.textContent = percent + '%';
+ 
+    let progress = setInterval(function() {
+        if (percent >= 100) {
+            location.href="menu.html";
+         
+        } else {
+            percent = percent + 1; 
+            progressBar.style.width = percent + '%';
+            progresBarText.textContent = percent + '%';
+        }
+    }, 100);  
+
+      });
+  
+ 
+
+    </script>
+
+</html>

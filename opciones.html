@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./main.css">
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="hovers.js"></script>
+</head>
+
+<body>
+    <div class="game-background">
+        <div class="main-menu">
+
+        </div>
+        <div class="main-buttons">
+            <div class="buttons-center">
+                <button onclick="location.href='./menu.html'" id="regresarbutton" type="button">
+                    <img id="regresar" onmouseover="onHoverRegresar();" onmouseout="offHoverRegresar();"
+                        src="./imagenes//botones/regresar.png" height="40" width="60" /></button>
+
+                <button disabled="true"> 
+                    <img id="sonido" src="./imagenes//botones/sonido.png" 
+                        height="40" width="60" /></button>
+            </div>
+            <div class="centrar">
+                <button id="menosbutton" onclick="restandosonido();" type="button"><img id="-" onmouseover="onHovermenos();"
+                        onmouseout="offHovermenos();" src="./imagenes//botones/menos.png" height="20"
+                        width="30" /></button>
+                <input type="range" class="form-range" min="0" max="10" step="1" id="rangesound">
+                <button id="masbutton" onclick="sumandosonido();" type="button"><img id="mas" onmouseover="onHovermas();"
+                        onmouseout="offHovermas();" src="./imagenes//botones/mas.png" height="20" width="30" /></button>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+<script>
+   
+    function sumandosonido() {
+        if($("#rangesound").val() < 10){
+        $("#rangesound").val(parseInt($("#rangesound").val())+1);
+    }
+    }
+    function restandosonido() {
+        if($("#rangesound").val() > 0){
+        $("#rangesound").val(parseInt($("#rangesound").val())-1);
+        }
+    }
+</script>
+
+
+</html>

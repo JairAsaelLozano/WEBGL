@@ -1,0 +1,25 @@
+.tabla-puntajes{
+    background-image:  url("./imagenes/botones/tabla.png");
+    background-size: contain;
+    width:40%;
+    height: 70%;
+    background-repeat: no-repeat;
+    margin: 5% auto;
+    float:left;
+    position:relative;
+    
+}
+
+
+.tabla-puntajes button{
+    display: flex;
+    margin: 1em auto;
+    outline: none;
+    border:0;
+    padding: 0;
+   
+    bottom: 2em;
+    right:2em;
+    position: absolute;
+    float:right;
+}

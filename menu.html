@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./main.css">
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="hovers.js"></script>
+</head>
+
+<body>
+    <div class="game-background">
+        <div class="main-menu">
+
+        </div>
+        <div class="main-buttons">
+            <button id="jugarbutton" onclick="location.href='game.html'" type="button"><img id="jugar" onmouseover="onHoverJugar();" onmouseout="offHoverJugar();" src="./imagenes//botones/jugar.png" height="80" width="120" /></button>
+            <button id="multijugadorbutton"  onclick="location.href='game/multiplayer.html'" type="button"><img id="multijugador" onmouseover="onHoverMultijugador();" onmouseout="offHoverMultijugador();" src="./imagenes//botones/multijugador.png" height="80" width="120" /></button>
+            <button onclick="location.href='./opciones.html'" id="opcionesbutton" type="button"><img id="opciones" onmouseover="onHoverOpciones();" onmouseout="offHoverOpciones();" src="./imagenes//botones/opciones.png" height="80" width="120" /></button>
+            <button onclick="location.href='./Puntajes.html'" id="puntajesbutton" type="button"><img id="puntajes" onmouseover="onHoverPuntajes();" onmouseout="offHoverPuntajes();" src="./imagenes//botones/puntajes.png" height="80" width="120" /></button>
+            <button id="salirbutton" type="button"><img id="salir" onmouseover="onHoverSalir();" onmouseout="offHoverSalir();" src="./imagenes//botones/salir.png" height="80" width="120" /></button>
+        </div>
+    </div>
+    
+
+</body>
+
+
+</html>

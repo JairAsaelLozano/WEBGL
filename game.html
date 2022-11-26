@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./main.css">
+    <link rel="stylesheet" type="text/css" href="./game.css">
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="hovers.js"></script>
+    <script type="text/javascript" src="game/js/libs/jquery/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="game/js/libs/three/three2.js"></script>
+	<script type="text/javascript" src="game/js/libs/three/MTLLoader.js"></script>
+	<script type="text/javascript" src="game/js/libs/three/FBXLoader.js"></script>
+	<script type="text/javascript" src="game/js/libs/three/OBJLoader.js"></script>
+	<script type="text/javascript" src="game/js/libs/three/inflate.min.js"></script>
+	<script src="player.js"></script>
+    <script type="text/javascript">   //CONTENIDO DEL JUEGO
+		var scene;
+		var camera;
+		var renderer;
+		var controls;
+		var objects = [];
+		var clock;
+		var deltaTime;
+		var keys = {};
+
+		var rayCaster;
+		var collisionObjects = [];
+		var isWorldReady = [false, false];
+		var jet;
+
+		var mixers = [];
+		var mixers_2 = [];
+		var persona;
+		const renamon = new Player();
+		$(document).ready(function () {
+
+
+			setupScene();
+			rayCaster = new THREE.Raycaster();
+
+
+			loadOBJWithMTL("game/assets/BodegaNueva/", "BodegaNueva.obj", "BodegaNueva.mtl", (object) => {
+
+				//object.tocado = false;
+
+				/*var box2 = object.clone();
+				box2.position.x = 30;
+
+				var box3 = object.clone();
+				box3.position.x = -30;
+
+
+				var box4 = object.clone();
+				box4.position.x = 0;
+				box4.position.z = 30;
+
+				var box5 = box4.clone();
+				box5.position.x = 30;
+
+				var box6 = box4.clone();
+				box6.position.x = -30;
+
+				var box7 = object.clone();
+				box7.position.z = 0;
+				box7.position.x = 50;
+				box7.rotation.y = THREE.Math.degToRad(90);
+
+				var box8 = box7.clone();
+				box8.position.x = -50;
+				box8.rotation.y = THREE.Math.degToRad(-90);
+*/
+
+
+
+				scene.add(object);
+				/*scene.add(box2);
+				scene.add(box3);
+				scene.add(box4);
+				scene.add(box5);
+				scene.add(box6);
+				scene.add(box7);
+				scene.add(box8);
+*/
+				//collisionObjects.push(object);
+				/*collisionObjects.push(box2);
+				collisionObjects.push(box3);
+				collisionObjects.push(box4);
+				collisionObjects.push(box5);
+				collisionObjects.push(box6);
+				collisionObjects.push(box7);
+				collisionObjects.push(box8);
+				*/
+				isWorldReady[0] = true;
+			});
+			loadOBJWithMTL("game/assets/CajaMadera/", "CajaMadera.obj", "CajaMadera.mtl", (object) => {
+
+				var caja2 = object.clone();
+				object.position.z = 35;
+				object.position.x = 15;
+
+				caja2.position.y = .4;
+
+				scene.add(object, caja2);
+			});
+			loadOBJWithMTL("game/assets/CajaFragil/", "BoxFragil.obj", "BoxFragil.mtl", (object) => {
+
+
+				var box2 = object.clone();
+				var box3 = object.clone();
+				var box4 = object.clone();
+				var box5 = object.clone();
+				var box6 = object.clone();
+				var box7 = object.clone();
+				var box8 = object.clone();
+				var box9 = object.clone();
+				var box10 = object.clone();
+				var box11 = object.clone();
+				var box12 = object.clone();
+				var box13 = object.clone();
+				var box14 = object.clone();
+				var box15 = object.clone();
+				var box16 = object.clone();
+				var box17 = object.clone();
+				var box18 = object.clone();
+				var box19 = object.clone();
+				var box20 = object.clone();
+
+				var box21 = object.clone();
+				var box22 = object.clone();
+				var box24 = object.clone();
+
+				var box23 = object.clone();
+
+				var box25 = object.clone();
+				var box26 = object.clone();
+				var box27 = object.clone();
+				var box28 = object.clone();
+
+
+				object.position.z = 10;
+				box2.position.z = 10;
+				box3.position.z = 10;
+				box4.position.z = 10;
+				box5.position.z = 10;
+				box6.position.z = 10;
+				box7.position.z = 10;
+				box8.position.z = 10;
+				box9.position.z = 10;
+				box10.position.z = 10;
+				box11.position.z = 10;
+
+				box12.position.z = 10;
+				box13.position.z = 10;
+				box14.position.z = 10;
+				box15.position.z = 10;
+				box16.position.z = 10;
+				box17.position.z = 10;
+				box18.position.z = 10;
+				box19.position.z = 10;
+				box20.position.z = 10;
+
+				box21.position.z = 40;
+				box22.position.z = 40;
+				box23.position.z = 40;
+				box24.position.z = 40;
+
+				box25.position.z = -20;
+				box26.position.z = -20;
+				box27.position.z = -30;
+				box28.position.z = -35;
+
+				box12.position.y = 5;
+				box13.position.y = 5;
+				box14.position.y = 5;
+				box15.position.y = 5;
+				box16.position.y = 5;
+				box17.position.y = 5;
+				box18.position.y = 5;
+				box19.position.y = 5;
+				box20.position.y = 5;
+
+
+				box22.position.y = 5;
+
+
+
+
+				box12.position.x = 3.5;
+				box13.position.x = 10.5;
+				box14.position.x = 17.5;
+				box15.position.x = 25.5;
+				box16.position.x = 32.5;
+				box17.position.x = -4.5;
+				box18.position.x = -11.5;
+				box19.position.x = -18.5;
+				box20.position.x = -25.5;
+
+				box21.position.x = 10;
+				box22.position.x = 10;
+				box24.position.x = 15;
+				box23.position.x = -15;
+
+				box25.position.x = 10;
+				box26.position.x = 20;
+				box27.position.x = 0;
+				box28.position.x = -10;
+
+
+				object.position.x = 0;
+				box4.position.x = 7;
+				box5.position.x = -7;
+				box6.position.x = 14;
+				box7.position.x = -14;
+				box8.position.x = 21;
+				box9.position.x = -21;
+				box10.position.x = 28;
+				box11.position.x = -28;
+
+
+
+				/*var box7 = object.clone();
+				var box8 = object.clone();
+				var box9 = object.clone();
+				var box10 = object.clone();
+				var box11 = object.clone();
+				var box12 = object.clone();
+				var box13 = object.clone();*/
+				scene.add(object, box4, box5, box6, box7, box8, box9, box10, box11, box12,
+					box13, box14, box15, box17, box18, box19, box20, box21, box22, box23, box24,
+					box25, box26, box27, box28);
+
+			});
+			// loadOBJWithMTL("game/assets/", "jetski.obj", "jetski.mtl", (object) => {
+			// 	object.position.z = 30;
+			// 	object.rotation.x = THREE.Math.degToRad(-90);
+			// 	object.name = "jetski"
+
+			// 	scene.add(object);
+			// 	jet = object;
+				
+			// });
+
+			isWorldReady[1] = true;
+				
+
+			// var loader = new THREE.FBXLoader();
+			// loader.load('game/assets/Personaje/Sad Idle.fbx', function (personaje) {
+			// 	debugger
+			// 	personaje.mixer = new THREE.AnimationMixer(personaje);
+
+			// 	mixers.push(personaje.mixer);
+
+			// 	var action =
+			// 		personaje.mixer.clipAction(personaje.animations[0]);
+			// 	action.play();
+
+			// 	personaje.position.z = 0;
+			// 	personaje.position.x = -1;
+			// 	personaje.position.y = 1.5;
+			// 	personaje.scale.set(10, 10, 10);
+			// 	personaje.rotation.y = THREE.Math.degToRad(180);
+
+			// 	persona.position.set(personaje.position.x, 2, personaje.position.z);
+
+			// 	personaje.traverse(function (child) {
+			// 		if (child.isMesh) {
+			// 			child.castShadow = true;
+			// 			child.receiveShadow = true;
+			// 		}
+			// 	});
+
+			// 	// camera.position.z = 8;
+			// 	// camera.position.y = 7.5;
+			// 	//persona = personaje;
+			// 	scene.add(personaje);
+			// 	persona.add(personaje);
+			// 	//persona.add(camera);
+			// 	scene.add(persona);
+
+			// 	debugger;
+
+
+			//});
+
+
+			lockJump = false;
+
+			renamon.setModel('Renamon/chr391 with animations.fbx', renamon, 0.0, 0.0, -6);
+
+			render();
+
+			
+
+			document.addEventListener('keydown', onKeyDown);
+			document.addEventListener('keyup', onKeyUp);
+		});
+
+		function loadOBJWithMTL(path, objFile, mtlFile, onLoadCallback) {
+			var mtlLoader = new THREE.MTLLoader();
+			mtlLoader.setPath(path);
+			mtlLoader.load(mtlFile, (materials) => {
+
+				var objLoader = new THREE.OBJLoader();
+				objLoader.setMaterials(materials);
+				objLoader.setPath(path);
+				objLoader.load(objFile, (object) => {
+					onLoadCallback(object);
+				});
+
+			});
+		}
+
+		function onKeyDown(event) {
+			keys[String.fromCharCode(event.keyCode)] = true;
+		}
+		function onKeyUp(event) {
+			keys[String.fromCharCode(event.keyCode)] = false;
+		}
+
+
+		function render() {
+			requestAnimationFrame(render);
+			deltaTime = clock.getDelta();
+
+		var playerMovX = 0;
+		var playerMovY = 0;
+		var playerMovZ = 0;
+
+		if(renamon.beggin){
+			renamon.setIndex(0);
+		}
+		else if(lockJump){
+			if (keys["A"]) {
+				playerMovX = -10;
+			}
+			else if (keys["D"]) {
+				playerMovX = 10;
+			}
+			
+			if(!renamon.getIsJump(0)){
+				lockJump = false;
+			}
+
+			if(!renamon.jumping && !renamon.isJump){
+				renamon.resetAnimation = true;
+				renamon.jumping = true;
+				renamon.isJump = true;
+			}
+			renamon.setIndex(4);
+			
+		}
+		else if(keys["E"]){
+			lockJump = true;
+			
+		}
+		else if(keys["Q"]){
+			if (keys["A"]) {
+				playerMovX = -3;
+				renamon.setIndex(3);
+			}
+			else if (keys["D"]) {
+				playerMovX = 3;
+				renamon.setIndex(3);
+			}
+			else{
+				renamon.setIndex(1);
+			}
+
+		}
+		else{
+			if (keys["A"]) {
+				playerMovX = -10;
+				renamon.setIndex(2);
+			}
+			else if (keys["D"]) {
+				playerMovX = 10;
+				renamon.setIndex(2);
+			}
+			else if (keys["W"]) {
+				playerMovZ = -10;
+				renamon.setIndex(2);
+			}
+			else if (keys["S"]) {
+				playerMovZ = 10;
+				renamon.setIndex(2);
+			}
+			else{
+				renamon.setIndex(1);
+			}
+		}
+		
+		
+
+
+
+
+			// var yaw = 0;
+			// var forward = 0;
+			// if (keys["A"]) {
+			// 	yaw = 5;
+			// } else if (keys["D"]) {
+			// 	yaw = -5;
+			// }
+			// if (keys["W"]) {
+			// 	forward = 20;
+			// } else if (keys["S"]) {
+			// 	forward = -20;
+			// }
+
+			if (isWorldReady[0] && isWorldReady[1]) {
+				// jet.rotation.z += yaw * deltaTime;
+				// jet.translateY(forward * deltaTime);
+
+				// Collision
+				/*
+				for (var i = 0; i < collisionObjects.length; i++) {
+
+					var collision = detectCollision(jet, collisionObjects[i]);
+
+					if (collision) {
+						// Si esta colisionando entonces le asignamos la ultima posicion conocida antes de colisionar
+						jet.translateY(-(forward * deltaTime));
+						collisionObjects[i].tocado = 1;
+						debugger
+						console.log("colisionando");
+						break;
+					}
+
+
+				} 
+				for (j = 0; j < collisionObjects.length; j++) {
+					if (collisionObjects[j].tocado == 1) {
+						collisionObjects[j].rotation.x -= 1 * deltaTime;
+					}
+				}*/
+
+				renamon.playAnimation(playerMovX, playerMovY, playerMovZ);
+				// camera.position.x = renamon.getPositionx();
+				// camera.position.z = renamon.getPositionz() + 1;
+				// camera.position.y = 15;
+
+				camera.lookAt(renamon.getPosition());
+			}
+
+
+
+			// if (mixers.length > 0) {
+			// 	for (var i = 0; i < mixers.length; i++) {
+			// 		mixers[i].update(deltaTime);
+			// 	}
+			// }
+			renderer.render(scene, camera);
+		}
+		
+		function setupScene() {
+            var ancho = 1400;
+            var alto =  900;
+			var visibleSize = { width:ancho , height:alto };
+			clock = new THREE.Clock();
+			scene = new THREE.Scene();
+			camera = new THREE.PerspectiveCamera(75, visibleSize.width / visibleSize.height, 0.1, 100);
+            debugger
+			camera.position.z = -5;
+			camera.position.x = 0;
+			camera.position.y = 20;
+
+			camera.rays = [
+				new THREE.Vector3(1, 0, 0),
+				new THREE.Vector3(-1, 0, 0),
+				new THREE.Vector3(0, 0, 1),
+				new THREE.Vector3(0, 0, -1),
+			];
+			camera.lastPosition = new THREE.Vector3(0, 0, 0);
+
+			renderer = new THREE.WebGLRenderer({ precision: "mediump" });
+			renderer.setClearColor(new THREE.Color(0, 0, 0));
+			renderer.setPixelRatio(visibleSize.width / visibleSize.height);
+			renderer.setSize(visibleSize.width, visibleSize.height);
+
+			var ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 1.0);
+			scene.add(ambientLight);
+
+			var directionalLight = new THREE.DirectionalLight(new THREE.Color(1, 1, 0), 0.4);
+			directionalLight.position.set(0, 0, 1);
+			//scene.add(directionalLight);
+
+			var grid = new THREE.GridHelper(50, 10, 0xffffff, 0xffffff);
+			grid.position.y = -1;
+			scene.add(grid);
+
+			$("#scene-section").append(renderer.domElement);
+
+		}
+
+		function detectCollision(object1, object2) {
+
+			for (var i = 0; i < object1.children.length; i++) {
+
+				for (var j = 0; j < object2.children.length; j++) {
+
+					object1.children[i].geometry.computeBoundingBox();
+					object2.children[i].geometry.computeBoundingBox();
+					object1.updateMatrixWorld();
+					object2.updateMatrixWorld();
+
+					var box1 = object1.children[i].geometry.boundingBox.clone();
+					box1.applyMatrix4(object1.matrixWorld);
+
+					var box2 = object2.children[i].geometry.boundingBox.clone();
+					box2.applyMatrix4(object2.matrixWorld);
+					if (box1.intersectsBox(box2)) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+	</script>
+
+
+
+
+</head>
+
+<body>
+    <div class="game-background-start" id="scene-section">
+
+        <div class="menu-padre">
+            <button id="pause" type="button"><img id="pausa" onmouseover="onHoverPausa();" onmouseout="offHoverPausa();"
+                    src="./imagenes//botones/pausa.png" height="60" width="100" /></button>
+            <div id="pausediv" class="game-pause">
+                <button id="reanudarbutton" type="button"><img id="reanudar"
+                        onmouseover="onHoverRenaudar();" onmouseout="offHoverRenaudar();" src="./imagenes//botones/reanudar.png"
+                        height="80" width="120" /></button>
+                <button id="configuracionbutton" type="button"><img id="settings"
+                        onmouseover="onHoverSettings();" onmouseout="offHoverSettings();"
+                        src="./imagenes//botones/ajustes.png" height="80" width="120" /></button>
+                <button onclick="location.href='menu.html'" id="salirbutton" type="button"><img id="salir"
+                        onmouseover="onHoverSalir();" onmouseout="offHoverSalir();"
+                        src="./imagenes//botones/salir.png" height="80" width="120" /></button>
+
+            </div>
+        </div>
+
+
+
+
+
+        
+    </div>
+
+
+</body>
+<script>
+
+
+    const div = document.querySelector(".game-pause");
+    const divbackground = document.querySelector(".game-background-start");
+
+    document.querySelector("#pause").addEventListener("click", () => {
+        div.classList.add("show_hide");
+
+    
+
+    });
+
+    document.querySelector("#reanudarbutton").addEventListener("click", () => {
+        div.classList.remove("show_hide");
+    });
+// document.querySelector("#pause").addEventListener("click", () => {
+// div.classList.remove("div_hide");
+//});
+
+</script>
+
+</html>l
