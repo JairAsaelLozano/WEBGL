@@ -4,6 +4,28 @@ function onHoverJugar() {
     $("#jugar").attr('src', './imagenes//botones/jugar_h.png');
 }
 
+function onHoverNivel1() {
+    $("#nivel1").attr('src', './imagenes//botones/nivel1_h.png');
+}
+
+function onHoverNivel2() {
+    $("#nivel2").attr('src', './imagenes//botones/nivel2_h.png');
+}
+
+function onHoverNivel3() {
+    $("#nivel3").attr('src', './imagenes//botones/nivel3_h.png');
+}
+
+function offHoverNivel1() {
+    $("#nivel1").attr('src', './imagenes//botones/nivel1.png');
+}
+function offHoverNivel2() {
+    $("#nivel2").attr('src', './imagenes//botones/nivel2.png');
+}
+function offHoverNivel3() {
+    $("#nivel3").attr('src', './imagenes//botones/nivel3.png');
+}
+
 function offHoverJugar() {
     
     $("#jugar").attr('src', './imagenes//botones/jugar.png');
