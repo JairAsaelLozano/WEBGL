@@ -13,6 +13,10 @@ class Player {
         this.state = value;
     }
 
+    setCatched(isCatched){
+        this.catched = isCatched;
+    }
+
     get mixers(){
         return this.animations;
     }
@@ -30,6 +34,7 @@ class Player {
         this.maxJump = 4.6;
         this.jumping = false;
         this.isJump = false;
+        this.catched = false;
 
         this.beggin = true;
         this.countBeggin = 0;
