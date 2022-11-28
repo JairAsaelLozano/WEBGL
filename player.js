@@ -13,6 +13,10 @@ class Player {
         this.state = value;
     }
 
+    setCatched(isCatched){
+        this.catched = isCatched;
+    }
+
     get mixers(){
         return this.animations;
     }
@@ -30,6 +34,7 @@ class Player {
         this.maxJump = 4.6;
         this.jumping = false;
         this.isJump = false;
+        this.catched = false;
 
         this.beggin = true;
         this.countBeggin = 0;
@@ -130,13 +135,13 @@ class Player {
                 if(playerMovX > 0 && playerMovZ == 0){
                     this.modelRef.rotation.y = THREE.Math.degToRad(90);
                 }
-                else if(playerMovZ == 0){
+                else if(playerMovX < 0 && playerMovZ == 0){
                     this.modelRef.rotation.y = THREE.Math.degToRad(-90);
                 }
-                if(playerMovZ > 0 && playerMovX == 0){
+                else if(playerMovZ > 0 && playerMovX == 0){
                     this.modelRef.rotation.y = THREE.Math.degToRad(0);
                 }
-                else if (playerMovX == 0) {
+                else if (playerMovZ < 0 && playerMovX == 0) {
                     this.modelRef.rotation.y = THREE.Math.degToRad(180);
                 }
 
@@ -149,12 +154,19 @@ class Player {
                 this.jump.weight = 0;
 
                 this.modelRef.position.x += playerMovX*deltaTime;
+                this.modelRef.position.z += playerMovZ*deltaTime;
 
-                if(playerMovX > 0){
+                if(playerMovX > 0 && playerMovZ == 0){
                     this.modelRef.rotation.y = THREE.Math.degToRad(90);
                 }
-                else{
+                else if(playerMovX < 0 && playerMovZ == 0){
                     this.modelRef.rotation.y = THREE.Math.degToRad(-90);
+                }
+                else if(playerMovZ > 0 && playerMovX == 0){
+                    this.modelRef.rotation.y = THREE.Math.degToRad(0);
+                }
+                else if (playerMovZ < 0 && playerMovX == 0) {
+                    this.modelRef.rotation.y = THREE.Math.degToRad(180);
                 }
 
             }break;
