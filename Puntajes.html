@@ -20,6 +20,15 @@
 
         </div>
         <div class="tabla-puntajes">
+            <div class="tablas">
+                <table style="color:black; font-size:medium;" id="table-puntaje">
+                    <tr>
+                      <th>Nombre</th>
+                      <th>Puntaje</th>
+                    
+                    </tr>
+                    </table>
+            </div>
             <button onclick="location.href='./menu.html'" id="regresarbutton" type="button">
                 <img id="regresar" onmouseover="onHoverRegresar();" onmouseout="offHoverRegresar();"
                     src="./imagenes//botones/regresar.png" height="40" width="60" /></button>
@@ -28,6 +37,35 @@
     
 
 </body>
+<script>
+$(document).ready(function () {
+    var dataToSend = { action: "getPuntaje"}
+								
 
+			
+    $.ajax({
+					url: "./conexion.php",
+					async: true,
+					type: 'POST',
+					data: dataToSend,
+					success: function (data) {
+					console.log(data);
+					var data2 = JSON.parse(data);
+                    
+                    data2.forEach(function (key, value) {
+                        $("#table-puntaje").append('<tr><th>'+data2[value].nombre+'</th><th>'+data2[value].puntaje+'</th></tr>')
+                     
+                        });
+				
+
+					},
+					error: function (x, y, z) {
+						alert("error en webservice" + x + y + z);
+					}
+				});
+
+
+})
+</script>
 
 </html>

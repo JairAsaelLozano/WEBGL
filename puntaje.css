@@ -7,6 +7,7 @@
     margin: 5% auto;
     float:left;
     position:relative;
+    text-align: center;
     
 }
 
@@ -17,9 +18,17 @@
     outline: none;
     border:0;
     padding: 0;
-   
+  
     bottom: 2em;
     right:2em;
     position: absolute;
     float:right;
 }
+.tabla-puntajes table{
+    margin: 30% 0;
+    text-align: left;
+    border-collapse: separate;
+    border-spacing: 10em 5px;
+}
+
+
