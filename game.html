@@ -39,7 +39,7 @@
 		var isWorldReady = [false, false];
 		var jet;
 
-		var puntuacion = 1000;
+		
 
 		var mixers = [];
 		var mixers_2 = [];
@@ -51,7 +51,7 @@
 		var consumable1 = new Consumables();
 		var consumable2 = new Consumables();
 		var consumable3 = new Consumables();
-
+		var puntuacion = 0;
 		$(document).ready(function () {
 			
 
@@ -547,10 +547,7 @@
 				renamon.setIndex(2);
 			}
 			else if (keys["P"]) {
-				var finalizar = new Date()
-				var puntaje = (finalizar - nacimiento) * 0.0001;
-
-				 location.href='resultado.html?Puntaje='+puntaje
+			
 			}
 			else{
 				renamon.setIndex(1);
@@ -559,14 +556,7 @@
 		
 
 			if (isWorldReady[0] && isWorldReady[1]) {
-				if(puntuacion > 100){
-				puntuacion -= 10 * deltaTime;
-				}else{
-					puntuacion = 100;
-				}
-
-
-				document.getElementById("score").value = Math.floor(puntuacion);
+				
 
 
 				boxWin.position.x = -3.5;
@@ -609,13 +599,17 @@
 					console.log("colide");
 					//scene.splice( scene.indexOf(consumable1.object), 1);
 					consumable1.object.position.y = -10;
-					puntuacion += 20;
+					puntuacion += .5;
 				}
 
 
 				
 				if(detectCollision(boxPlayer,boxWin)){
-					console.log("Win");
+					var finalizar = new Date()
+					var puntaje = (finalizar - nacimiento) * 0.0001;
+					puntaje -= puntuacion;
+					location.href='resultado.html?Puntaje='+puntaje+'&Win=Win&Level=1'
+					//console.log("Win");
 				}
 
 				console.log("X: " + boxPlayer.position.x + "_Z: " + boxPlayer.position.z);
@@ -658,9 +652,12 @@
 				boxGuard.rotation.y = guard.modelRef.rotation.y + THREE.Math.degToRad(90);
 
 				if(detectCollision(boxPlayer,boxGuard)){
+					location.href='perdida.html'
 					console.log("Lose");
 					guard.setCatch(true, renamon.getPositionx(), renamon.getPositionz());
 					renamon.setCatched(true);
+
+					
 				}
 
 				// camera.position.x = renamon.getPositionx();
@@ -763,7 +760,7 @@
                         src="./imagenes//botones/salir.png" height="80" width="120" /></button>
 
             </div>
-			<input id="score" readonly>
+			
         </div>
 
 

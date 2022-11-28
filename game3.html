@@ -40,8 +40,8 @@
 		var isWorldReady = [false, false];
 		var jet;
 
-		var puntuacion = 1000;
-
+	
+		var nacimiento = new Date()
 		var mixers = [];
 		var mixers_2 = [];
 		var persona;
@@ -821,13 +821,9 @@
 			// }
 
 			if (isWorldReady[0] && isWorldReady[1]) {
-				if(puntuacion > 100){
-				puntuacion -= 10 * deltaTime;
-				}else{
-					puntuacion = 100;
-				}
+			
 
-				document.getElementById("score").value = Math.floor(puntuacion);
+			
 
 				boxWin.position.x = -3.5;
 				boxWin.position.y = 0;
@@ -859,7 +855,11 @@
 				} 
 
 				if(detectCollision(boxPlayer,boxWin)){
-					console.log("Win");
+					var finalizar = new Date()
+					var puntaje = (finalizar - nacimiento) * 0.0001;
+			
+					location.href='resultado.html?Puntaje='+puntaje+'&Win=Win&Level=3'
+			
 				}
 
 				//console.log("X: " + boxPlayer.position.x + "_Z: " + boxPlayer.position.z);
@@ -894,6 +894,7 @@
 				boxGuard1.rotation.y = guard1.modelRef.rotation.y + THREE.Math.degToRad(90);
 
 				if(detectCollision(boxPlayer,boxGuard1)){
+					location.href='perdida.html'
 					console.log("Lose");
 					guard1.setCatch(true, renamon.getPositionx(), renamon.getPositionz());
 					renamon.setCatched(true);
@@ -923,6 +924,7 @@
 				boxGuard2.rotation.y = guard2.modelRef.rotation.y + THREE.Math.degToRad(90);
 
 				if(detectCollision(boxPlayer,boxGuard2)){
+					location.href='perdida.html'
 					console.log("Lose");
 					guard2.setCatch(true, renamon.getPositionx(), renamon.getPositionz());
 					renamon.setCatched(true);
@@ -952,6 +954,7 @@
 				boxGuard3.rotation.y = guard3.modelRef.rotation.y + THREE.Math.degToRad(90);
 
 				if(detectCollision(boxPlayer,boxGuard3)){
+					location.href='perdida.html'
 					console.log("Lose");
 					guard3.setCatch(true, renamon.getPositionx(), renamon.getPositionz());
 					renamon.setCatched(true);
@@ -1064,7 +1067,7 @@
 
             </div>
         </div>
-		<input id="score" readonly>
+	
 
 
 

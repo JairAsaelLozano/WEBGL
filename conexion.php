@@ -25,9 +25,10 @@
 	function addPuntaje() {
 		$name = $_POST["name"];
 		$puntaje = $_POST["puntaje"];
+		$nivel = $_POST["nivel"];
 		$mysqli = connect();
 
-		$result = $mysqli->query("INSERT INTO puntaje(nombre, puntaje) values('".$name."','".$puntaje."')");	
+		$result = $mysqli->query("INSERT INTO puntaje(nombre, puntaje, nivel) values('".$name."','".$puntaje."','".$nivel."')");	
 		
 		if (!$result) {
 			echo "Problema al hacer un query: " . $mysqli->error;								
@@ -40,7 +41,7 @@
 	function getPuntaje() {
 		$mysqli = connect();
 
-		$result = $mysqli->query("Select * from puntaje order by puntaje desc limit 10");	
+		$result = $mysqli->query("Select * from puntaje order by puntaje asc limit 10");	
 		
 		if (!$result) {
 			echo "Problema al hacer un query: " . $mysqli->error;								
