@@ -18,6 +18,7 @@
 	<script type="text/javascript" src="game/js/libs/three/OBJLoader.js"></script>
 	<script type="text/javascript" src="game/js/libs/three/inflate.min.js"></script>
 	<script src="player.js"></script>
+	<script src="guard.js"></script>
     <script type="text/javascript">   //CONTENIDO DEL JUEGO
 		var scene;
 		var camera;
@@ -28,15 +29,26 @@
 		var deltaTime;
 		var keys = {};
 
+		var boxPlayer;
+		var boxWin;
+		var boxGuard1;
+		var boxGuard2;
+		var boxGuard3;
+
 		var rayCaster;
 		var collisionObjects = [];
 		var isWorldReady = [false, false];
 		var jet;
 
+		var puntuacion = 1000;
+
 		var mixers = [];
 		var mixers_2 = [];
 		var persona;
 		const renamon = new Player();
+		const guard1 = new Guard();
+		const guard2 = new Guard();
+		const guard3 = new Guard();
 		$(document).ready(function () {
 
 
@@ -110,6 +122,12 @@
 			loadOBJWithMTL("game/assets/CajaFragil/", "BoxFragil.obj", "BoxFragil.mtl", (object) => {
 
                 /*Cajas*/
+				boxPlayer = object.clone();
+				boxWin = object.clone();
+				boxGuard1 = object.clone();
+				boxGuard2 = object.clone();
+				boxGuard3 = object.clone();
+
 				var box2 = object.clone();
 				var box3 = object.clone();
 				var box4 = object.clone();
@@ -573,6 +591,18 @@
                     box150, box151, box152, box153, box154, box155, box156, box157, box158, box159, box160, 
                     box161, box162, box163,box164, box165, box166);
 
+				collisionObjects.push(object,box2,box3 ,box4, box5, box6, box7, box8, box9, box10, box11, box12,
+					box13, box14, box15, box17, box18, box19, box20, box21, box22, box23, box24,
+					box25, box26, box27, box28,box29,box30,box31,box32,box33,box34,box35,box36,box37,
+					box38,box39,box40,box41,box42,box43,box44,box45,box46,box47,box48,box49,box50,box51
+					,box52,box53,box54,box55,box56,box57,box58,box59,box60,box61,box62,box63,box64,box65,
+					box66,box67,box68,box69,box70,box71,box72,box73,box74,box75,box76,box77,box78,box79,
+					box80,box81,box82,box83,box84,box85,box86,box87,box88,box89,box90,box91,box92,box93,
+                    box94, box95, box96, box97, box98, box99,box100,box101,box102,box103,box104,box105,
+                    box106,box107,box108,box109,box110, box143, box144, box145, box146, box147, box148, box149,
+                    box150, box151, box152, box153, box154, box155, box156, box157, box158, box159, box160, 
+                    box161, box162, box163,box164, box165, box166);
+
 			});
 			// loadOBJWithMTL("game/assets/", "jetski.obj", "jetski.mtl", (object) => {
 			// 	object.position.z = 30;
@@ -629,7 +659,35 @@
 
 			lockJump = false;
 
-			renamon.setModel('Renamon/chr391 with animations.fbx', renamon, 0.0, 0.0, -6);
+			renamon.setModel('Renamon/chr391 with animations.fbx', renamon, 3.0, 0.0, -27);
+
+			guard1.setModel('SkullMeramon/chr406 with animations.fbx', guard1, 20.5, 0.0, -5.0);
+
+			guard1.setPositions([20.5, -5.0]);
+			guard1.setPositions([-18.5, -5.0]);
+			guard1.setPositions([-18.5, -10.0]);
+			guard1.setPositions([20.5, -10.0]);
+			guard1.speed = 7;
+			guard1.patrol = 2;
+
+			guard2.setModel('SkullMeramon/chr406 with animations.fbx', guard2, 20.5, 0.0, 20.5);
+
+			guard2.setPositions([20.5, 20.5]);
+			guard2.setPositions([-18.5, 20.5]);
+			guard2.setPositions([-18.5, 36.0]);
+			guard2.setPositions([20.5, 36.0]);
+			guard2.speed = 7;
+			guard2.patrol = 2;
+
+			guard3.setModel('SkullMeramon/chr406 with animations.fbx', guard3, 20.5, 0.0, 37);
+
+			guard3.setPositions([20.5, 37.0]);
+			guard3.setPositions([0.3, 37.0]);
+			guard3.setPositions([0.3, 52.0]);
+			guard3.setPositions([20.5, 52.0]);
+			guard3.speed = 7;
+			guard3.patrol = 2;
+
 
 			render();
 
@@ -670,6 +728,8 @@
 		var playerMovY = 0;
 		var playerMovZ = 0;
 
+		var hiddenPlayer = false;
+
 		if(renamon.beggin){
 			renamon.setIndex(0);
 		}
@@ -698,12 +758,21 @@
 			
 		}
 		else if(keys["Q"]){
+			hiddenPlayer = true;
 			if (keys["A"]) {
 				playerMovX = -3;
 				renamon.setIndex(3);
 			}
 			else if (keys["D"]) {
 				playerMovX = 3;
+				renamon.setIndex(3);
+			}
+			else if (keys["W"]) {
+				playerMovZ = -3;
+				renamon.setIndex(3);
+			}
+			else if (keys["S"]) {
+				playerMovZ = 3;
 				renamon.setIndex(3);
 			}
 			else{
@@ -752,33 +821,142 @@
 			// }
 
 			if (isWorldReady[0] && isWorldReady[1]) {
-				// jet.rotation.z += yaw * deltaTime;
-				// jet.translateY(forward * deltaTime);
+				if(puntuacion > 100){
+				puntuacion -= 10 * deltaTime;
+				}else{
+					puntuacion = 100;
+				}
 
-				// Collision
-				/*
+				document.getElementById("score").value = Math.floor(puntuacion);
+
+				boxWin.position.x = -3.5;
+				boxWin.position.y = 0;
+				boxWin.position.z = 59;
+				boxWin.scale.set(1, 2, 0.5);
+
+				boxPlayer.position.x = renamon.getPositionx();
+				boxPlayer.position.z = renamon.getPositionz();
+				boxPlayer.position.y = 0;
+				boxPlayer.scale.set(0.5, 2, 0.5);
+
+				if (keys["A"]) {
+					boxPlayer.position.x += -10 * deltaTime;
+				} else if (keys["D"]) {
+					boxPlayer.position.x += 10 * deltaTime;
+				}
+				if (keys["W"]) {
+					boxPlayer.position.z += -10 * deltaTime;
+				} else if (keys["S"]) {
+					boxPlayer.position.z += 10 * deltaTime;
+				}
+				
 				for (var i = 0; i < collisionObjects.length; i++) {
-
-					var collision = detectCollision(jet, collisionObjects[i]);
-
+					var collision = detectCollision(boxPlayer, collisionObjects[i]);
 					if (collision) {
-						// Si esta colisionando entonces le asignamos la ultima posicion conocida antes de colisionar
-						jet.translateY(-(forward * deltaTime));
-						collisionObjects[i].tocado = 1;
-						debugger
-						console.log("colisionando");
-						break;
+						playerMovX = 0;
+						playerMovZ = 0;
 					}
-
-
 				} 
-				for (j = 0; j < collisionObjects.length; j++) {
-					if (collisionObjects[j].tocado == 1) {
-						collisionObjects[j].rotation.x -= 1 * deltaTime;
-					}
-				}*/
 
-				renamon.playAnimation(playerMovX, playerMovY, playerMovZ);
+				if(detectCollision(boxPlayer,boxWin)){
+					console.log("Win");
+				}
+
+				//console.log("X: " + boxPlayer.position.x + "_Z: " + boxPlayer.position.z);
+				if(renamon.catched){
+					renamon.playAnimation(0, 0, 0);
+				}else{
+					renamon.playAnimation(playerMovX, playerMovY, playerMovZ);
+				}
+
+
+				guard1.play();
+				boxGuard1.position.x = guard1.getPositionx();
+				if(guard1.selectDir == 1 || guard1.selectDir == 2){
+					boxGuard1.position.x += 8;
+				}else if(guard1.selectDir == 0 || guard1.selectDir == 3){
+					boxGuard1.position.x -= 8;
+				}
+
+				boxGuard1.position.z = guard1.getPositionz();
+				if(guard1.selectDir == 4 || guard1.selectDir == 5){
+					boxGuard1.position.z += 8;
+				}else if(guard1.selectDir == 6 || guard1.selectDir == 7){
+					boxGuard1.position.z -= 8;
+				}
+
+				boxGuard1.position.y = 0;
+				if(hiddenPlayer){
+					boxGuard1.scale.set(2, 2, 1);
+				}else{
+					boxGuard1.scale.set(3, 2, 1.5);
+				}
+				boxGuard1.rotation.y = guard1.modelRef.rotation.y + THREE.Math.degToRad(90);
+
+				if(detectCollision(boxPlayer,boxGuard1)){
+					console.log("Lose");
+					guard1.setCatch(true, renamon.getPositionx(), renamon.getPositionz());
+					renamon.setCatched(true);
+				}
+
+				guard2.play();
+				boxGuard2.position.x = guard2.getPositionx();
+				if(guard2.selectDir == 1 || guard2.selectDir == 2){
+					boxGuard2.position.x += 8;
+				}else if(guard2.selectDir == 0 || guard2.selectDir == 3){
+					boxGuard2.position.x -= 8;
+				}
+
+				boxGuard2.position.z = guard2.getPositionz();
+				if(guard2.selectDir == 4 || guard2.selectDir == 5){
+					boxGuard2.position.z += 8;
+				}else if(guard2.selectDir == 6 || guard2.selectDir == 7){
+					boxGuard2.position.z -= 8;
+				}
+
+				boxGuard2.position.y = 0;
+				if(hiddenPlayer){
+					boxGuard2.scale.set(2, 2, 1);
+				}else{
+					boxGuard2.scale.set(3, 2, 1.5);
+				}
+				boxGuard2.rotation.y = guard2.modelRef.rotation.y + THREE.Math.degToRad(90);
+
+				if(detectCollision(boxPlayer,boxGuard2)){
+					console.log("Lose");
+					guard2.setCatch(true, renamon.getPositionx(), renamon.getPositionz());
+					renamon.setCatched(true);
+				}
+
+				guard3.play();
+				boxGuard3.position.x = guard3.getPositionx();
+				if(guard3.selectDir == 1 || guard3.selectDir == 2){
+					boxGuard3.position.x += 8;
+				}else if(guard3.selectDir == 0 || guard3.selectDir == 3){
+					boxGuard3.position.x -= 8;
+				}
+
+				boxGuard3.position.z = guard3.getPositionz();
+				if(guard3.selectDir == 4 || guard3.selectDir == 5){
+					boxGuard3.position.z += 8;
+				}else if(guard3.selectDir == 6 || guard3.selectDir == 7){
+					boxGuard3.position.z -= 8;
+				}
+
+				boxGuard3.position.y = 0;
+				if(hiddenPlayer){
+					boxGuard3.scale.set(2, 2, 1);
+				}else{
+					boxGuard3.scale.set(3, 2, 1.5);
+				}
+				boxGuard3.rotation.y = guard3.modelRef.rotation.y + THREE.Math.degToRad(90);
+
+				if(detectCollision(boxPlayer,boxGuard3)){
+					console.log("Lose");
+					guard3.setCatch(true, renamon.getPositionx(), renamon.getPositionz());
+					renamon.setCatched(true);
+				}
+
 				// camera.position.x = renamon.getPositionx();
 				// camera.position.z = renamon.getPositionz() + 1;
 				// camera.position.y = 15;
@@ -803,7 +981,7 @@
 			clock = new THREE.Clock();
 			scene = new THREE.Scene();
 			camera = new THREE.PerspectiveCamera(75, visibleSize.width / visibleSize.height, 0.1, 100);
-            debugger
+            //debugger
 			camera.position.z = 35;
 			camera.position.x = 20;
 			camera.position.y = 20;
@@ -886,7 +1064,7 @@
 
             </div>
         </div>
-
+		<input id="score" readonly>
 
 
 

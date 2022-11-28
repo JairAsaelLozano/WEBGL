@@ -19,6 +19,7 @@
 	<script type="text/javascript" src="game/js/libs/three/inflate.min.js"></script>
 	<script src="player.js"></script>
 	<script src="guard.js"></script>
+	<script src="consumables.js"></script>
     <script type="text/javascript">   //CONTENIDO DEL JUEGO
 		var scene;
 		var camera;
@@ -38,11 +39,18 @@
 		var isWorldReady = [false, false];
 		var jet;
 
+		var puntuacion = 1000;
+
 		var mixers = [];
 		var mixers_2 = [];
 		var persona;
 		const renamon = new Player();
 		const guard = new Guard();
+
+		var consumable1 = new Consumables();
+		var consumable2 = new Consumables();
+		var consumable3 = new Consumables();
+
 		$(document).ready(function () {
 
 
@@ -433,7 +441,7 @@
 				var box11 = object.clone();
 				var box12 = object.clone();
 				var box13 = object.clone();*/
-				scene.add(boxWin, object,box2,box3 ,box4, box5, box6, box7, box8, box9, box10, box11, box12,
+				scene.add(object,box2,box3 ,box4, box5, box6, box7, box8, box9, box10, box11, box12,
 					box13, box14, box15, box17, box18, box19, box20, box21, box22, box23, box24,
 					box25, box26, box27, box28,box29,box30,box31,box32,box33,box34,box35,box36,box37,
 					box38,box39,box40,box41,box42,box43,box44,box45,box46,box47,box48,box49,box50,box51
@@ -502,6 +510,10 @@
 
 			//});
 
+			//consumable1.setModel("game/assets/fruit/", "Wumpa.obj", "Wumpa.mtl", 1, 18, -4);
+			//consumable1.setModel("game/assets/Chunk Of Meat/", "Chunk Of Meat.obj", "Chunk Of Meat.mtl", 1, 15, -4);
+			consumable1.setModel("game/assets/star/", "model.obj", "model.mtl", 1, 15, 2, -4, 0.1);
+
 
 			lockJump = false;
 
@@ -544,7 +556,6 @@
 			keys[String.fromCharCode(event.keyCode)] = false;
 		}
 
-
 		function render() {
 			requestAnimationFrame(render);
 			deltaTime = clock.getDelta();
@@ -552,6 +563,8 @@
 		var playerMovX = 0;
 		var playerMovY = 0;
 		var playerMovZ = 0;
+
+		var hiddenPlayer = false;
 
 		if(renamon.beggin){
 			renamon.setIndex(0);
@@ -581,6 +594,7 @@
 			
 		}
 		else if(keys["Q"]){
+			hiddenPlayer = true;
 			if (keys["A"]) {
 				playerMovX = -3;
 				renamon.setIndex(3);
@@ -627,6 +641,14 @@
 		
 
 			if (isWorldReady[0] && isWorldReady[1]) {
+				if(puntuacion > 100){
+				puntuacion -= 10 * deltaTime;
+				}else{
+					puntuacion = 100;
+				}
+
+				document.getElementById("score").value = Math.floor(puntuacion);
+
 				boxWin.position.x = -3.5;
 				boxWin.position.y = 0;
 				boxWin.position.z = 59;
@@ -659,19 +681,37 @@
 						playerMovZ = 0;
 					}
 				} 
+
+
+
+
+				if(detectCollision(boxPlayer, consumable1.object)){
+					console.log("colide");
+					//scene.splice( scene.indexOf(consumable1.object), 1);
+					consumable1.object.position.y = -10;
+					puntuacion += 20;
+				}
+
+
 				
 				if(detectCollision(boxPlayer,boxWin)){
 					console.log("Win");
 				}
 
-				//console.log("X: " + boxPlayer.position.x + "_Z: " + boxPlayer.position.z);
+				console.log("X: " + boxPlayer.position.x + "_Z: " + boxPlayer.position.z);
 				//for (j = 0; j < collisionObjects.length; j++) {
 				//	if (collisionObjects[j].tocado == 1) {
 				//		collisionObjects[j].rotation.x -= 1 * deltaTime;
 				//	}
 				//}
 
-				renamon.playAnimation(playerMovX, playerMovY, playerMovZ);
+				if(renamon.catched){
+					renamon.playAnimation(0, 0, 0);
+				}else{
+					renamon.playAnimation(playerMovX, playerMovY, playerMovZ);
+				}
+				
+				
 
 				guard.play();
 
@@ -690,12 +730,17 @@
 				}
 
 				boxGuard.position.y = 0;
-				boxGuard.scale.set(3, 2, 1);
+				if(hiddenPlayer){
+					boxGuard.scale.set(2, 2, 0.8);
+				}else{
+					boxGuard.scale.set(3, 2, 1);
+				}
 				boxGuard.rotation.y = guard.modelRef.rotation.y + THREE.Math.degToRad(90);
 
 				if(detectCollision(boxPlayer,boxGuard)){
 					console.log("Lose");
 					guard.setCatch(true, renamon.getPositionx(), renamon.getPositionz());
+					renamon.setCatched(true);
 				}
 
 				// camera.position.x = renamon.getPositionx();
@@ -804,6 +849,7 @@
                         src="./imagenes//botones/salir.png" height="80" width="120" /></button>
 
             </div>
+			<input id="score" readonly>
         </div>
 
 

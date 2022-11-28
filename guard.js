@@ -18,7 +18,7 @@ class Guard {
         //console.log(this.selectDir);
         if(!this.catch){
             if(this.wait < 0){
-                this.setIndex(3);
+                this.setIndex(this.patrol);
 
                 if(this.selectDir == -1){
                     while (this.selectDir == -1) {
@@ -38,7 +38,7 @@ class Guard {
                     }
                 }else{
                     if(this.selectDir == 0){
-                        this.playAnimation(-3, 0, 0);
+                        this.playAnimation(-this.speed, 0, 0);
 
                         if(this.positions[1][0] >= this.modelRef.position.x){
                             this.modelRef.position.x = this.positions[1][0];
@@ -48,7 +48,7 @@ class Guard {
                         }
                     }
                     if(this.selectDir == 1){
-                        this.playAnimation(3, 0, 0);
+                        this.playAnimation(this.speed, 0, 0);
 
                         if(this.positions[0][0] <= this.modelRef.position.x){
                             this.modelRef.position.x = this.positions[0][0];
@@ -60,7 +60,7 @@ class Guard {
                     }
 
                     if(this.selectDir == 2){
-                        this.playAnimation(3, 0, 0);
+                        this.playAnimation(this.speed, 0, 0);
 
                         if(this.positions[3][0] <= this.modelRef.position.x){
                             this.modelRef.position.x = this.positions[3][0];
@@ -71,7 +71,7 @@ class Guard {
                     }
 
                     if(this.selectDir == 3){
-                        this.playAnimation(-3, 0, 0);
+                        this.playAnimation(-this.speed, 0, 0);
 
                         if(this.positions[2][0] >= this.modelRef.position.x){
                             this.modelRef.position.x = this.positions[2][0];
@@ -83,7 +83,7 @@ class Guard {
                     }
 
                     if(this.selectDir == 4){
-                        this.playAnimation(0, 0, 3);
+                        this.playAnimation(0, 0, this.speed);
 
                         if(this.positions[3][1] <= this.modelRef.position.z){
                             this.modelRef.position.z = this.positions[3][1];
@@ -94,7 +94,7 @@ class Guard {
                     }
 
                     if(this.selectDir == 5){
-                        this.playAnimation(0, 0, 3);
+                        this.playAnimation(0, 0, this.speed);
 
                         if(this.positions[2][1] <= this.modelRef.position.z){
                             this.modelRef.position.z = this.positions[2][1];
@@ -105,7 +105,7 @@ class Guard {
                     }
 
                     if(this.selectDir == 6){
-                        this.playAnimation(0, 0, -3);
+                        this.playAnimation(0, 0, -this.speed);
 
                         if(this.positions[1][1] >= this.modelRef.position.z){
                             this.modelRef.position.z = this.positions[1][1];
@@ -116,7 +116,7 @@ class Guard {
                     }
 
                     if(this.selectDir == 7){
-                        this.playAnimation(0, 0, -3);
+                        this.playAnimation(0, 0, -this.speed);
 
                         if(this.positions[0][1] >= this.modelRef.position.z){
                             this.modelRef.position.z = this.positions[0][1];
@@ -168,6 +168,8 @@ class Guard {
         this.selectDir = -1;
         this.positions = [];
         this.catch = false;
+        this.patrol = 3;
+        this.speed = 3;
 
         this.maxJump = 4.6;
         this.jumping = false;
