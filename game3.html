@@ -46,7 +46,11 @@
 		var mixers = [];
 		var mixers_2 = [];
 		var persona;
+		var movimientoacelerado = 0;
+		var isclockactive = 0;
 		var consumable1 = new Consumables();
+		var consumable2 = new Consumables();
+		var consumable3 = new Consumables();
 		const renamon = new Player();
 		const guard1 = new Guard();
 		const guard2 = new Guard();
@@ -659,6 +663,8 @@
 			//});
 
 			consumable1.setModel("game/assets/star/", "model.obj", "model.mtl", 1, 21, 2, -30, 0.1);
+			consumable2.setModel("game/assets/Meat/", "Meat.obj", "Meat.mtl", 1, 5, 4, -35, 1);
+			consumable3.setModel("game/assets/clock/", "clock.obj", "clock.mtl", 1, -21, -3, -35, 1);
 
 			lockJump = false;
 
@@ -785,19 +791,37 @@
 		}
 		else{
 			if (keys["A"]) {
+				if(movimientoacelerado == 0){
 				playerMovX = -10;
+				}else{
+					playerMovX = -15;
+				}
 				renamon.setIndex(2);
 			}
 			else if (keys["D"]) {
+				if(movimientoacelerado == 0){
 				playerMovX = 10;
+				}else{
+					playerMovX = 15;
+				}
 				renamon.setIndex(2);
 			}
 			else if (keys["W"]) {
+				if(movimientoacelerado == 0){
 				playerMovZ = -10;
+				}else{
+				playerMovZ = -15;
+
+				}
 				renamon.setIndex(2);
 			}
 			else if (keys["S"]) {
+				if(movimientoacelerado == 0){
 				playerMovZ = 10;
+				}else{
+				playerMovZ = 15;
+
+				}
 				renamon.setIndex(2);
 			}
 			else{
@@ -863,10 +887,27 @@
 					puntuacion = 1;
 					debugger
 				}
+				if(detectCollision(boxPlayer, consumable2.object)){
+					console.log("colide");
+					//scene.splice( scene.indexOf(consumable1.object), 1);
+					consumable2.object.position.y = -10;
+					movimientoacelerado = 1;
+					debugger
+				}
+				if(detectCollision(boxPlayer, consumable3.object)){
+					console.log("colide");
+					//scene.splice( scene.indexOf(consumable1.object), 1);
+					consumable3.object.position.y = -15;
+					isclockactive = 1;
+					debugger
+				}
 				if(detectCollision(boxPlayer,boxWin) && puntuacion == 1){
 					var finalizar = new Date()
 					var puntaje = (finalizar - nacimiento) * 0.0001;
-			
+					if(isclockactive == 1){
+					var puntaje =  puntaje - 3;	
+					}
+				
 					location.href='resultado.html?Puntaje='+puntaje+'&Win=Win&Level=3'
 			
 				}
