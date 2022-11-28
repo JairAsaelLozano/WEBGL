@@ -19,6 +19,7 @@
 	<script type="text/javascript" src="game/js/libs/three/inflate.min.js"></script>
 	<script src="player.js"></script>
 	<script src="guard.js"></script>
+	<script src="consumables.js"></script>
     <script type="text/javascript">   //CONTENIDO DEL JUEGO
 		var scene;
 		var camera;
@@ -45,6 +46,7 @@
 		var mixers = [];
 		var mixers_2 = [];
 		var persona;
+		var consumable1 = new Consumables();
 		const renamon = new Player();
 		const guard1 = new Guard();
 		const guard2 = new Guard();
@@ -656,6 +658,7 @@
 
 			//});
 
+			consumable1.setModel("game/assets/star/", "model.obj", "model.mtl", 1, 21, 2, -30, 0.1);
 
 			lockJump = false;
 
@@ -853,8 +856,14 @@
 						playerMovZ = 0;
 					}
 				} 
-
-				if(detectCollision(boxPlayer,boxWin)){
+				if(detectCollision(boxPlayer, consumable1.object)){
+					console.log("colide");
+					//scene.splice( scene.indexOf(consumable1.object), 1);
+					consumable1.object.position.y = -10;
+					puntuacion = 1;
+					debugger
+				}
+				if(detectCollision(boxPlayer,boxWin) && puntuacion == 1){
 					var finalizar = new Date()
 					var puntaje = (finalizar - nacimiento) * 0.0001;
 			

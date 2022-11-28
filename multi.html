@@ -19,7 +19,7 @@
 	<script type="text/javascript" src="game/js/libs/three/inflate.min.js"></script>
 	<script src="player.js"></script>
 	<script src="guard.js"></script>
-	<script src="consumables.js"></script>
+    <script src="consumables.js"></script>
     <script type="text/javascript">   //CONTENIDO DEL JUEGO
 		var scene;
 		var camera;
@@ -31,24 +31,28 @@
 		var keys = {};
 
 		var boxPlayer;
+		var boxPlayer2;
 		var boxWin;
 		var boxGuard1;
 		var boxGuard2;
+		var boxGuard3;
 
 		var rayCaster;
 		var collisionObjects = [];
 		var isWorldReady = [false, false];
 		var jet;
 
+        var consumable1 = new Consumables();
 		var nacimiento = new Date()
-		
 		var mixers = [];
 		var mixers_2 = [];
 		var persona;
-		var consumable1 = new Consumables();
-		const renamon = new Player();
+        const renamon = [];
+		 renamon[0] = new Player();
+		 renamon[1] = new Player();
 		const guard1 = new Guard();
 		const guard2 = new Guard();
+		const guard3 = new Guard();
 		$(document).ready(function () {
 
 
@@ -110,151 +114,24 @@
 				isWorldReady[0] = true;
 			});
 			loadOBJWithMTL("game/assets/CajaMadera/", "CajaMadera.obj", "CajaMadera.mtl", (object) => {
-                /*Cajas*/
 
-				var caja3 = object.clone();
-				var caja4 = object.clone();
-				var caja5 = object.clone();
-				var caja6 = object.clone();
-				var caja7 = object.clone();
-				var caja8 = object.clone();
-				var caja9 = object.clone();
-				var caja10 = object.clone();
-				var caja11 = object.clone();
-				var caja12 = object.clone();
-				var caja13 = object.clone();
-				var caja14 = object.clone();
-				var caja15 = object.clone();
-				var caja16 = object.clone();
-				var caja17 = object.clone();
-				var caja18 = object.clone();
-				var caja19 = object.clone();
-				var caja20 = object.clone();
-				var caja21 = object.clone();
-				var caja22 = object.clone();
-				var caja23 = object.clone();
-				var caja24 = object.clone();
-				var caja25 = object.clone();
-				var caja26 = object.clone();
-				var caja27 = object.clone();
-				var caja28 = object.clone();
-				var caja29 = object.clone();
-				var caja30 = object.clone();
-				var caja31 = object.clone();
-				var caja32 = object.clone();
-				
-                /*Cajas*/
+				/*var caja2 = object.clone();
+				object.position.z = 35;
+				object.position.x = 15;
 
-                /*Posicion z*/
-                caja3.position.z = 35;
-                caja4.position.z = 35;
-                caja5.position.z = 35;
-                caja6.position.z = 35;
-                caja7.position.z = 35;
-                caja8.position.z = 35;
-                caja9.position.z = 35;
-                caja10.position.z = 40;
-                caja11.position.z = 40;
-                caja12.position.z = 40;
-                caja13.position.z = 40;
-                caja14.position.z = 40;
-                caja15.position.z = 40;
-                caja16.position.z = 40;
-                caja17.position.z = 15;
-                caja18.position.z = 15;
-                caja19.position.z = 15;
-                caja20.position.z = 15;
-                caja21.position.z = 15;
-                caja22.position.z = 15;
-                caja23.position.z = 15;
-                caja24.position.z = 10;
-                caja25.position.z = 10;
-                caja26.position.z = 10;
-                caja27.position.z = 10;
-                caja28.position.z = 10;
-                caja29.position.z = 10;
-                caja30.position.z = 10;
-                caja31.position.z = 15;
-                caja32.position.z = 10;
-                /*Posicion z*/
+				caja2.position.y = .4;
 
-                /*Posicion x*/
-                caja3.position.x = -20;
-                caja4.position.x = -15;
-                caja5.position.x =-10;
-                caja6.position.x = -5;
-                caja7.position.x = 0;
-                caja8.position.x = 5;
-                caja9.position.x = 15;
-                caja10.position.x = -20;
-                caja11.position.x = -15;
-                caja12.position.x = -5;
-                caja13.position.x = 0;
-                caja14.position.x = 5;
-                caja15.position.x = 10;
-                caja16.position.x = 15;
-                caja17.position.x = -20;
-                caja18.position.x = -15;
-                caja19.position.x = -10;
-                caja20.position.x = -5;
-                caja21.position.x = 0;
-                caja22.position.x = 5;
-                caja23.position.x = 10;
-                caja24.position.x = -20;
-                caja25.position.x = -15;
-                caja26.position.x = -10;
-                caja27.position.x = -5;
-                caja28.position.x = 0;
-                caja29.position.x = 5;
-                caja30.position.x = 10;
-                caja31.position.x = 22;
-                caja32.position.x = 22;
-                /*Posicion x*/
-
-                /*Posicion y*/
-                caja3.position.y = 5;
-                caja4.position.y = 5;
-                caja5.position.y = 5;
-                caja6.position.y = 5;
-                caja7.position.y = 5;
-                caja8.position.y = 5;
-                caja9.position.y = 5;
-                caja10.position.y = 5;
-                caja11.position.y = 5;
-                caja12.position.y = 5;
-                caja13.position.y = 5;
-                caja14.position.y = 5;
-                caja15.position.y = 5;
-                caja16.position.y = 5;
-                caja17.position.y = 5;
-                caja18.position.y = 5;
-                caja19.position.y = 5;
-                caja20.position.y = 5;
-                caja21.position.y = 5;
-                caja22.position.y = 5;
-                caja23.position.y = 5;
-                caja24.position.y = 5;
-                caja25.position.y = 5;
-                caja26.position.y = 5;
-                caja27.position.y = 5;
-                caja28.position.y = 5;
-                caja29.position.y = 5;
-                caja30.position.y = 5;
-                caja31.position.y = 5;
-                caja32.position.y = 5;
-                /*Posicion y*/
-
-				scene.add(object, caja3,caja4,caja5,caja6,caja7,caja8,caja9,caja10,caja11,caja12,caja13,caja14,
-                caja15,caja16,caja17,caja18,caja19,caja20.caja21,caja22,caja23,caja24,caja25,caja26,caja27,caja28,
-                caja29,caja30,caja31,caja32);
+				scene.add(object, caja2);*/
 			});
 			loadOBJWithMTL("game/assets/CajaFragil/", "BoxFragil.obj", "BoxFragil.mtl", (object) => {
 
                 /*Cajas*/
 				boxPlayer = object.clone();
+				boxPlayer2 = object.clone();
 				boxWin = object.clone();
 				boxGuard1 = object.clone();
 				boxGuard2 = object.clone();
+				boxGuard3 = object.clone();
 
 				var box2 = object.clone();
 				var box3 = object.clone();
@@ -353,9 +230,44 @@
 				var box96 = object.clone();
 				var box97 = object.clone();
 				var box98 = object.clone();
+				var box99 = object.clone();
 				var box100 = object.clone();
-				var box101= object.clone();
-				var box102= object.clone();
+				var box101 = object.clone();
+				var box102 = object.clone();
+				var box103 = object.clone();
+				var box104 = object.clone();
+                var box105 = object.clone();
+				var box106 = object.clone();
+				var box107 = object.clone();
+				var box108 = object.clone();
+				var box109 = object.clone();
+				var box110 = object.clone();
+           
+				var box143 = object.clone();
+				var box144 = object.clone();
+				var box145 = object.clone();
+				var box146 = object.clone();
+				var box147 = object.clone();
+				var box148 = object.clone();
+				var box149 = object.clone();
+				var box150 = object.clone();
+				var box151 = object.clone();
+				var box152 = object.clone();
+				var box153 = object.clone();
+				var box154 = object.clone();
+				var box155 = object.clone();
+				var box156 = object.clone();
+				var box157 = object.clone();
+				var box158 = object.clone();
+				var box159 = object.clone();
+				var box160 = object.clone();
+				var box161 = object.clone();
+				var box162 = object.clone();
+				var box163 = object.clone();
+				var box164 = object.clone();
+				var box165 = object.clone();
+				var box166 = object.clone();
+
 
 			/*Posicion z*/
 				box2.position.z = 60;
@@ -411,50 +323,87 @@
 				box52.position.z = 60;
 				box53.position.z = 60;
 				box54.position.z = 60;
-                box55.position.z = 35;
-                box56.position.z = 35;
-                box57.position.z = 35;
-                box58.position.z = 35;
-                box59.position.z = 35;
-                box60.position.z = 35;
-                box61.position.z = 35;
-                box62.position.z = 40;
-                box63.position.z = 40;
-                box64.position.z = 40;
-                box65.position.z = 40;
-                box66.position.z = 40;
-                box67.position.z = 40;
-                box68.position.z = 40;
-                box69.position.z = 15;
-                box70.position.z = 15;
-                box71.position.z = 15;
-                box72.position.z = 15;
-                box73.position.z = 15;
-                box74.position.z = 15;
-                box75.position.z = 15;
-                box76.position.z = 10;
-                box77.position.z = 10;
-                box78.position.z = 10;
-                box79.position.z = 10;
-                box80.position.z = 10;
-                box81.position.z = 10;
-                box82.position.z = 10;
-                box83.position.z = 15;
-                box84.position.z = 10;
-                box85.position.z = -10;
-                box86.position.z = -10;
-                box87.position.z = -10;
-                box88.position.z = -25;
-                box89.position.z = -25;
-                box90.position.z = -25;
-                box91.position.z = -10;
-                box92.position.z = -10;
-                box93.position.z = -10;
-                box94.position.z = -25;
-                box95.position.z = -25;
-                box96.position.z = -25;
-              
-                
+                box55.position.z = -40;
+                box56.position.z = -35;
+                box57.position.z = -30;
+                box58.position.z = -25;
+                box59.position.z = -20;
+                box60.position.z = -40;
+                box61.position.z = -35;
+                box62.position.z = -30;
+                box63.position.z = -25;
+                box64.position.z = -20;
+				box65.position.z = 0;
+                box66.position.z = -20;
+                box67.position.z = -20;
+                box68.position.z = 0;
+                box69.position.z = 0;
+                box70.position.z = 0;
+                box71.position.z = 0;
+                box72.position.z = 0;
+                box73.position.z = 5;
+                box74.position.z = 5;
+                box75.position.z = 5;
+                box76.position.z = 5;
+                box77.position.z = 5;
+                box78.position.z = 5;
+                box79.position.z =15;
+                box80.position.z =15;
+                box81.position.z =15;
+                box82.position.z =15;
+                box83.position.z =15;
+                box84.position.z =15;
+                box85.position.z =15;
+                box86.position.z =15;
+                box87.position.z =27;
+                box88.position.z =32;
+                box89.position.z =42;
+                box90.position.z =47;
+                box91.position.z =27;
+                box92.position.z =32;
+                box93.position.z =42;
+                box94.position.z =47;
+                box95.position.z =27;
+                box96.position.z =32;
+                box97.position.z =42;
+                box98.position.z =47;
+                box99.position.z =27;
+                box100.position.z =32;
+                box101.position.z =42;
+                box102.position.z =47;
+                box103.position.z =27;
+                box104.position.z =32;
+                box105.position.z =42;
+                box106.position.z =47;
+                box107.position.z =27;
+                box108.position.z =32;
+                box109.position.z =42;
+                box110.position.z =47;
+                box143.position.z =27;
+                box144.position.z =32;
+                box145.position.z =42;
+                box146.position.z =47;
+                box147.position.z =27;
+                box148.position.z =32;
+                box149.position.z =42;
+                box150.position.z =47;
+                box151.position.z =27;
+                box152.position.z =32;
+                box153.position.z =42;
+                box154.position.z =47;
+                box155.position.z =27;
+                box156.position.z =32;
+                box157.position.z =42;
+                box158.position.z =47;
+                box159.position.z =27;
+                box160.position.z =32;
+                box161.position.z =42;
+                box162.position.z =47;
+                box163.position.z =27;
+                box164.position.z =32;
+                box165.position.z =42;
+                box166.position.z =47;
+
 
 				/*Posicion z*/
 
@@ -513,60 +462,118 @@
 				box52.position.x = -25;
 				box53.position.x = -20;
 				box54.position.x = -15;
-				box55.position.x = -20;
-                box56.position.x = -15;
-                box57.position.x =-10;
-                box58.position.x = -5;
-                box59.position.x = 0;
-                box60.position.x = 5;
-                box61.position.x = 15;
-                box62.position.x = -20;
-                box63.position.x = -15;
-                box64.position.x = -5;
+                box55.position.x = 15;
+                box56.position.x = 15;
+                box57.position.x = 15;
+                box58.position.x = 15;
+                box59.position.x = 15;
+                box60.position.x = -8;
+                box61.position.x = -8;
+                box62.position.x = -8;
+                box63.position.x = -8;
+                box64.position.x = -8;
                 box65.position.x = 0;
-                box66.position.x = 5;
-                box67.position.x = 10;
-                box68.position.x = 15;
-                box69.position.x = -20;
-                box70.position.x = -15;
+                box66.position.x = 10;
+                box67.position.x = -3;
+                box68.position.x = 5;
+                box69.position.x = -5;
+                box70.position.x = 10;
                 box71.position.x = -10;
-                box72.position.x = -5;
+                box72.position.x = 15;
                 box73.position.x = 0;
                 box74.position.x = 5;
-                box75.position.x = 10;
-                box76.position.x = -20;
-                box77.position.x = -15;
-                box78.position.x = -10;
-                box79.position.x = -5;
-                box80.position.x = 0;
-                box81.position.x = 5;
-                box82.position.x = 10;
-                box83.position.x = 22;
-                box84.position.x = 22;
-                box85.position.x = 2;
-                box86.position.x = -10;
-                box87.position.x = 15;
-                box88.position.x = -10;
-                box89.position.x = 10;
-                box90.position.x = -0;
-                box91.position.x = 2;
+                box75.position.x = -5;
+                box76.position.x = 10;
+                box77.position.x = -10;
+                box78.position.x = 15;
+                box79.position.x = 22;
+                box80.position.x = 17;
+                box81.position.x = 12;
+                box82.position.x = 7;
+                box83.position.x = -20;
+                box84.position.x = -15;
+                box85.position.x = -10;
+                box86.position.x = -5;
+                box87.position.x = -15;
+                box88.position.x = -15;
+                box89.position.x = -15;
+                box90.position.x = -15;
+                box91.position.x = -10;
                 box92.position.x = -10;
-                box93.position.x = 15;
+                box93.position.x = -10;
                 box94.position.x = -10;
-                box95.position.x = 10;
-                box96.position.x = -0;
-                
+                box95.position.x = -5;
+                box96.position.x = -5;
+                box97.position.x = -5;
+                box98.position.x = -5;
+                box99.position.x = 5;
+                box100.position.x =5;
+                box101.position.x =5;
+                box102.position.x =5;
+                box103.position.x =10;
+                box104.position.x =10;
+                box105.position.x =10;
+                box106.position.x =10;
+                box107.position.x =15;
+                box108.position.x =15;
+                box109.position.x =15;
+                box110.position.x =15;
+               
+                box143.position.x = -15;
+                box144.position.x = -15;
+                box145.position.x = -15;
+                box146.position.x = -15;
+                box147.position.x = -10;
+                box148.position.x = -10;
+                box149.position.x = -10;
+                box150.position.x = -10;
+                box151.position.x = -5;
+                box152.position.x = -5;
+                box153.position.x = -5;
+                box154.position.x = -5;
+                box155.position.x = 5;
+                box156.position.x =5;
+                box157.position.x =5;
+                box158.position.x =5;
+                box159.position.x =10;
+                box160.position.x =10;
+                box161.position.x =10;
+                box162.position.x =10;
+                box163.position.x =15;
+                box164.position.x =15;
+                box165.position.x =15;
+                box166.position.x =15;
+
 
 				/*Posicion x*/
 				
 				/*Posicion y*/
-                box91.position.y = 5;
-                box92.position.y = 5;
-                box93.position.y = 5;
-                box94.position.y = 5;
-                box95.position.y = 5;
-                box96.position.y = 5;
-                
+                box143.position.y = 5;
+                box144.position.y = 5;
+                box145.position.y = 5;
+                box146.position.y = 5;
+                box147.position.y = 5;
+                box148.position.y = 5;
+                box149.position.y = 5;
+                box150.position.y = 5;
+                box151.position.y = 5;
+                box152.position.y = 5;
+                box153.position.y = 5;
+                box154.position.y = 5;
+                box155.position.y = 5;
+                box156.position.y =5;
+                box157.position.y =5;
+                box158.position.y =5;
+                box159.position.y =5;
+                box160.position.y =5;
+                box161.position.y =5;
+                box162.position.y =5;
+                box163.position.y =5;
+                box164.position.y =5;
+                box165.position.y =5;
+                box166.position.y =5;
+
+
 				/*Posicion y*/
 				
 				
@@ -584,7 +591,10 @@
 					,box52,box53,box54,box55,box56,box57,box58,box59,box60,box61,box62,box63,box64,box65,
 					box66,box67,box68,box69,box70,box71,box72,box73,box74,box75,box76,box77,box78,box79,
 					box80,box81,box82,box83,box84,box85,box86,box87,box88,box89,box90,box91,box92,box93,
-                    box94,box95,box96);
+                    box94, box95, box96, box97, box98, box99,box100,box101,box102,box103,box104,box105,
+                    box106,box107,box108,box109,box110, box143, box144, box145, box146, box147, box148, box149,
+                    box150, box151, box152, box153, box154, box155, box156, box157, box158, box159, box160, 
+                    box161, box162, box163,box164, box165, box166);
 
 				collisionObjects.push(object,box2,box3 ,box4, box5, box6, box7, box8, box9, box10, box11, box12,
 					box13, box14, box15, box17, box18, box19, box20, box21, box22, box23, box24,
@@ -593,7 +603,10 @@
 					,box52,box53,box54,box55,box56,box57,box58,box59,box60,box61,box62,box63,box64,box65,
 					box66,box67,box68,box69,box70,box71,box72,box73,box74,box75,box76,box77,box78,box79,
 					box80,box81,box82,box83,box84,box85,box86,box87,box88,box89,box90,box91,box92,box93,
-                    box94,box95,box96);
+                    box94, box95, box96, box97, box98, box99,box100,box101,box102,box103,box104,box105,
+                    box106,box107,box108,box109,box110, box143, box144, box145, box146, box147, box148, box149,
+                    box150, box151, box152, box153, box154, box155, box156, box157, box158, box159, box160, 
+                    box161, box162, box163,box164, box165, box166);
 
 			});
 			// loadOBJWithMTL("game/assets/", "jetski.obj", "jetski.mtl", (object) => {
@@ -647,30 +660,41 @@
 
 
 			//});
-
-			consumable1.setModel("game/assets/star/", "model.obj", "model.mtl", 1, 21, 2, -30, 0.1);
+            consumable1.setModel("game/assets/star/", "model.obj", "model.mtl", 1, 21, 2, -30, 0.1);
 
 
 			lockJump = false;
 
-			renamon.setModel('Renamon/chr391 with animations.fbx', renamon, -2.8, 0.0, -54);
+			renamon[0].setModel('Renamon/chr391 with animations.fbx', renamon[0], 3.0, 0.0, -27);
+			renamon[1].setModel('Renamon/chr391 with animations.fbx', renamon[1], 3.0, 0.0, -32);
 
-			guard1.setModel('SkullMeramon/chr406 with animations.fbx', guard1, 20.6, 0.0, -39.0);
+			guard1.setModel('SkullMeramon/chr406 with animations.fbx', guard1, 20.5, 0.0, -5.0);
 
-			guard1.setPositions([20.6, -39.0]);
-			guard1.setPositions([-18.5, -39.0]);
-			guard1.setPositions([-18.5, -5.5]);
-			guard1.setPositions([20.6, -5.5]);
-			guard1.speed = 4;
+			guard1.setPositions([20.5, -5.0]);
+			guard1.setPositions([-18.5, -5.0]);
+			guard1.setPositions([-18.5, -10.0]);
+			guard1.setPositions([20.5, -10.0]);
+			guard1.speed = 7;
+			guard1.patrol = 2;
 
-			guard2.setModel('SkullMeramon/chr406 with animations.fbx', guard2, 20.0, 0.0, 20.0);
+			//guard2.setModel('SkullMeramon/chr406 with animations.fbx', guard2, 20.5, 0.0, 20.5);
 
-			guard2.setPositions([20.0, 20.0]);
-			guard2.setPositions([-20.0, 20.0]);
-			guard2.setPositions([-20.0, 29.0]);
-			guard2.setPositions([20.0, 29.0]);
-			guard2.speed = 6;
-			guard2.patrol = 2;
+			// guard2.setPositions([20.5, 20.5]);
+			// guard2.setPositions([-18.5, 20.5]);
+			// guard2.setPositions([-18.5, 36.0]);
+			// guard2.setPositions([20.5, 36.0]);
+			// guard2.speed = 7;
+			// guard2.patrol = 2;
+
+			guard3.setModel('SkullMeramon/chr406 with animations.fbx', guard3, 20.5, 0.0, 37);
+
+			guard3.setPositions([20.5, 37.0]);
+			guard3.setPositions([0.3, 37.0]);
+			guard3.setPositions([0.3, 52.0]);
+			guard3.setPositions([20.5, 52.0]);
+			guard3.speed = 7;
+			guard3.patrol = 2;
+
 
 			render();
 
@@ -713,8 +737,8 @@
 
 		var hiddenPlayer = false;
 
-		if(renamon.beggin){
-			renamon.setIndex(0);
+		if(renamon[0].beggin){
+			renamon[0].setIndex(0);
 		}
 		else if(lockJump){
 			if (keys["A"]) {
@@ -724,68 +748,142 @@
 				playerMovX = 10;
 			}
 			
-			if(!renamon.getIsJump(0)){
+			if(!renamon[0].getIsJump(0)){
 				lockJump = false;
 			}
 
-			if(!renamon.jumping && !renamon.isJump){
-				renamon.resetAnimation = true;
-				renamon.jumping = true;
-				renamon.isJump = true;
+			if(!renamon[0].jumping && !renamon[0].isJump){
+				renamon[0].resetAnimation = true;
+				renamon[0].jumping = true;
+				renamon[0].isJump = true;
 			}
-			renamon.setIndex(4);
+			renamon[0].setIndex(4);
 			
 		}
 		else if(keys["E"]){
-			//lockJump = true;
+			lockJump = true;
 			
 		}
 		else if(keys["Q"]){
 			hiddenPlayer = true;
 			if (keys["A"]) {
 				playerMovX = -3;
-				renamon.setIndex(3);
+				renamon[0].setIndex(3);
 			}
 			else if (keys["D"]) {
 				playerMovX = 3;
-				renamon.setIndex(3);
+				renamon[0].setIndex(3);
 			}
 			else if (keys["W"]) {
 				playerMovZ = -3;
-				renamon.setIndex(3);
+				renamon[0].setIndex(3);
 			}
 			else if (keys["S"]) {
 				playerMovZ = 3;
-				renamon.setIndex(3);
+				renamon[0].setIndex(3);
 			}
 			else{
-				renamon.setIndex(1);
+				renamon[0].setIndex(1);
 			}
 
 		}
 		else{
 			if (keys["A"]) {
 				playerMovX = -10;
-				renamon.setIndex(2);
+				renamon[0].setIndex(2);
 			}
 			else if (keys["D"]) {
 				playerMovX = 10;
-				renamon.setIndex(2);
+				renamon[0].setIndex(2);
 			}
 			else if (keys["W"]) {
 				playerMovZ = -10;
-				renamon.setIndex(2);
+				renamon[0].setIndex(2);
 			}
 			else if (keys["S"]) {
 				playerMovZ = 10;
-				renamon.setIndex(2);
+				renamon[0].setIndex(2);
 			}
 			else{
-				renamon.setIndex(1);
+				renamon[0].setIndex(1);
 			}
 		}
 		
-		
+        var playerMovX2 = 0;
+		var playerMovY2 = 0;
+		var playerMovZ2 = 0;
+        
+		if(renamon[1].beggin){
+			renamon[1].setIndex(0);
+		}
+		else if(lockJump){
+			if (keys["A"]) {
+				playerMovX2 = -10;
+			}
+			else if (keys["D"]) {
+				playerMovX2 = 10;
+			}
+			
+			if(!renamon[1].getIsJump(0)){
+				lockJump = false;
+			}
+
+			if(!renamon[1].jumping && !renamon[1].isJump){
+				renamon[1].resetAnimation = true;
+				renamon[1].jumping = true;
+				renamon[1].isJump = true;
+			}
+			renamon[1].setIndex(4);
+			
+		}
+		else if(keys["E"]){
+			lockJump = true;
+			
+		}
+		else if(keys["Q"]){
+			hiddenPlayer = true;
+			if (keys["A"]) {
+				playerMovX2 = -3;
+				renamon[1].setIndex(3);
+			}
+			else if (keys["D"]) {
+				playerMovX2 = 3;
+				renamon[1].setIndex(3);
+			}
+			else if (keys["W"]) {
+				playerMovZ2 = -3;
+				renamon[1].setIndex(3);
+			}
+			else if (keys["S"]) {
+				playerMovZ2 = 3;
+				renamon[1].setIndex(3);
+			}
+			else{
+				renamon[1].setIndex(1);
+			}
+
+		}
+		else{
+			if (keys["J"]) {
+				playerMovX2 = -10;
+				renamon[1].setIndex(2);
+			}
+			else if (keys["L"]) {
+				playerMovX2 = 10;
+				renamon[1].setIndex(2);
+			}
+			else if (keys["I"]) {
+				playerMovZ2 = -10;
+				renamon[1].setIndex(2);
+			}
+			else if (keys["K"]) {
+				playerMovZ2 = 10;
+				renamon[1].setIndex(2);
+			}
+			else{
+				renamon[1].setIndex(1);
+			}
+		}
 
 
 
@@ -807,15 +905,23 @@
 			
 
 			
+
 				boxWin.position.x = -3.5;
 				boxWin.position.y = 0;
 				boxWin.position.z = 59;
 				boxWin.scale.set(1, 2, 0.5);
 
-				boxPlayer.position.x = renamon.getPositionx();
-				boxPlayer.position.z = renamon.getPositionz();
+				boxPlayer.position.x = renamon[0].getPositionx();
+				boxPlayer.position.z = renamon[0].getPositionz();
+                
+				boxPlayer2.position.x = renamon[1].getPositionx();
+				boxPlayer2.position.z = renamon[1].getPositionz();
+
+
 				boxPlayer.position.y = 0;
 				boxPlayer.scale.set(0.5, 2, 0.5);
+                boxPlayer2.position.y = 0;
+				boxPlayer2.scale.set(0.5, 2, 0.5);
 
 				if (keys["A"]) {
 					boxPlayer.position.x += -10 * deltaTime;
@@ -827,37 +933,75 @@
 				} else if (keys["S"]) {
 					boxPlayer.position.z += 10 * deltaTime;
 				}
+
+                if (keys["J"]) {
+					boxPlayer2.position.x += -10 * deltaTime;
+				} else if (keys["L"]) {
+					boxPlayer2.position.x += 10 * deltaTime;
+				}
+				if (keys["I"]) {
+					boxPlayer2.position.z += -10 * deltaTime;
+				} else if (keys["K"]) {
+					boxPlayer2.position.z += 10 * deltaTime;
+				}
+
 				
 				for (var i = 0; i < collisionObjects.length; i++) {
 					var collision = detectCollision(boxPlayer, collisionObjects[i]);
+					var collision2 = detectCollision(boxPlayer2, collisionObjects[i]);
 					if (collision) {
 						playerMovX = 0;
 						playerMovZ = 0;
 					}
+                    if (collision2) {
+						playerMovX2 = 0;
+						playerMovZ2 = 0;
+					}
 				} 
 
-				if(detectCollision(boxPlayer, consumable1.object)){
+			
+                if(detectCollision(boxPlayer, consumable1.object)){
 					console.log("colide");
 					//scene.splice( scene.indexOf(consumable1.object), 1);
 					consumable1.object.position.y = -10;
 					puntuacion = 1;
 					debugger
 				}
-
-				if(detectCollision(boxPlayer,boxWin) && puntuacion == 1){
+                if(detectCollision(boxPlayer2, consumable1.object)){
+					console.log("colide");
+					//scene.splice( scene.indexOf(consumable1.object), 1);
+					consumable1.object.position.y = -10;
+					puntuacion = 1;
+					debugger
+				}
+                if(detectCollision(boxPlayer,boxWin) && puntuacion == 1){
 					var finalizar = new Date()
 					var puntaje = (finalizar - nacimiento) * 0.0001;
-					location.href='resultado.html?Puntaje='+puntaje+'&Win=Win&Level=2'
+			
+					location.href='resultado.html?Puntaje='+puntaje+'&Win=Win&Level=3'
+			
+				}
+                if(detectCollision(boxPlayer2,boxWin) && puntuacion == 1){
+					var finalizar = new Date()
+					var puntaje = (finalizar - nacimiento) * 0.0001;
+			
+					location.href='resultado.html?Puntaje='+puntaje+'&Win=Win&Level=3'
+			
 				}
 
+                
 				//console.log("X: " + boxPlayer.position.x + "_Z: " + boxPlayer.position.z);
-				
-				if(renamon.catched){
-					renamon.playAnimation(0, 0, 0);
+				if(renamon[0].catched){
+					renamon[0].playAnimation(0, 0, 0);
 				}else{
-					renamon.playAnimation(playerMovX, playerMovY, playerMovZ);
+					renamon[0].playAnimation(playerMovX, playerMovY, playerMovZ);
 				}
-				
+
+                if(renamon[1].catched){
+					renamon[1].playAnimation(0, 0, 0);
+				}else{
+					renamon[1].playAnimation(playerMovX2, playerMovY2, playerMovZ2);
+				}
 
 				guard1.play();
 				boxGuard1.position.x = guard1.getPositionx();
@@ -884,42 +1028,94 @@
 
 				if(detectCollision(boxPlayer,boxGuard1)){
 					location.href='perdida.html'
-					// console.log("Lose");
-					// guard1.setCatch(true, renamon.getPositionx(), renamon.getPositionz());
-					// renamon.setCatched(true);
+					console.log("Lose");
+					guard1.setCatch(true, renamon[0].getPositionx(), renamon[0].getPositionz());
+					renamon[0].setCatched(true);
 				}
-
-				guard2.play();
-				boxGuard2.position.x = guard2.getPositionx();
-				if(guard2.selectDir == 1 || guard2.selectDir == 2){
-					boxGuard2.position.x += 8;
-				}else if(guard2.selectDir == 0 || guard2.selectDir == 3){
-					boxGuard2.position.x -= 8;
-				}
-
-				boxGuard2.position.z = guard2.getPositionz();
-				if(guard2.selectDir == 4 || guard2.selectDir == 5){
-					boxGuard2.position.z += 8;
-				}else if(guard2.selectDir == 6 || guard2.selectDir == 7){
-					boxGuard2.position.z -= 8;
-				}
-
-				boxGuard2.position.y = 0;
-				if(hiddenPlayer){
-					boxGuard2.scale.set(2, 2, 0.1);
-				}else{
-					boxGuard2.scale.set(3, 2, 1.5);
-				}
-				boxGuard2.rotation.y = guard2.modelRef.rotation.y + THREE.Math.degToRad(90);
-
-				if(detectCollision(boxPlayer,boxGuard2)){
+                if(detectCollision(boxPlayer2,boxGuard1)){
 					location.href='perdida.html'
-					// console.log("Lose");
-					// guard2.setCatch(true, renamon.getPositionx(), renamon.getPositionz());
-					// renamon.setCatched(true);
+					console.log("Lose");
+					guard1.setCatch(true, renamon[1].getPositionx(), renamon[1].getPositionz());
+					renamon[1].setCatched(true);
 				}
 
-				camera.lookAt(renamon.getPosition());
+				// guard2.play();
+				// boxGuard2.position.x = guard2.getPositionx();
+				// if(guard2.selectDir == 1 || guard2.selectDir == 2){
+				// 	boxGuard2.position.x += 8;
+				// }else if(guard2.selectDir == 0 || guard2.selectDir == 3){
+				// 	boxGuard2.position.x -= 8;
+				// }
+
+				// boxGuard2.position.z = guard2.getPositionz();
+				// if(guard2.selectDir == 4 || guard2.selectDir == 5){
+				// 	boxGuard2.position.z += 8;
+				// }else if(guard2.selectDir == 6 || guard2.selectDir == 7){
+				// 	boxGuard2.position.z -= 8;
+				// }
+
+				// boxGuard2.position.y = 0;
+				// if(hiddenPlayer){
+				// 	boxGuard2.scale.set(2, 2, 1);
+				// }else{
+				// 	boxGuard2.scale.set(3, 2, 1.5);
+				// }
+				// boxGuard2.rotation.y = guard2.modelRef.rotation.y + THREE.Math.degToRad(90);
+
+                // if(detectCollision(boxPlayer,boxGuard2)){
+				// 	location.href='perdida.html'
+				// 	console.log("Lose");
+				// 	guard1.setCatch(true, renamon[0].getPositionx(), renamon[0].getPositionz());
+				// 	renamon[0].setCatched(true);
+				// }
+                // if(detectCollision(boxPlayer2,boxGuard2)){
+				// 	location.href='perdida.html'
+				// 	console.log("Lose");
+				// 	guard1.setCatch(true, renamon[1].getPositionx(), renamon[1].getPositionz());
+				// 	renamon[1].setCatched(true);
+				// }
+
+				guard3.play();
+				boxGuard3.position.x = guard3.getPositionx();
+				if(guard3.selectDir == 1 || guard3.selectDir == 2){
+					boxGuard3.position.x += 8;
+				}else if(guard3.selectDir == 0 || guard3.selectDir == 3){
+					boxGuard3.position.x -= 8;
+				}
+
+				boxGuard3.position.z = guard3.getPositionz();
+				if(guard3.selectDir == 4 || guard3.selectDir == 5){
+					boxGuard3.position.z += 8;
+				}else if(guard3.selectDir == 6 || guard3.selectDir == 7){
+					boxGuard3.position.z -= 8;
+				}
+
+				boxGuard3.position.y = 0;
+				if(hiddenPlayer){
+					boxGuard3.scale.set(2, 2, 1);
+				}else{
+					boxGuard3.scale.set(3, 2, 1.5);
+				}
+				boxGuard3.rotation.y = guard3.modelRef.rotation.y + THREE.Math.degToRad(90);
+
+                if(detectCollision(boxPlayer,boxGuard3)){
+					location.href='perdida.html'
+					console.log("Lose");
+					guard1.setCatch(true, renamon[0].getPositionx(), renamon[0].getPositionz());
+					renamon[0].setCatched(true);
+				}
+                if(detectCollision(boxPlayer2,boxGuard3)){
+					location.href='perdida.html'
+					console.log("Lose");
+					guard1.setCatch(true, renamon[1].getPositionx(), renamon[1].getPositionz());
+					renamon[1].setCatched(true);
+				}
+
+				// camera.position.x = renamon.getPositionx();
+				// camera.position.z = renamon.getPositionz() + 1;
+				// camera.position.y = 15;
+
+				camera.lookAt(renamon[0].getPosition());
 			}
 
 
@@ -1022,7 +1218,7 @@
 
             </div>
         </div>
-
+	
 
 
 

@@ -40,7 +40,7 @@
 		var jet;
 
 		
-
+		
 		var mixers = [];
 		var mixers_2 = [];
 		var persona;
@@ -51,7 +51,7 @@
 		var consumable1 = new Consumables();
 		var consumable2 = new Consumables();
 		var consumable3 = new Consumables();
-		var puntuacion = 0;
+		var key = 0;
 		$(document).ready(function () {
 			
 
@@ -599,15 +599,16 @@
 					console.log("colide");
 					//scene.splice( scene.indexOf(consumable1.object), 1);
 					consumable1.object.position.y = -10;
-					puntuacion += .5;
+					puntuacion = 1;
+				
 				}
 
 
 				
-				if(detectCollision(boxPlayer,boxWin)){
+				if(detectCollision(boxPlayer,boxWin) && puntuacion == 1){
 					var finalizar = new Date()
 					var puntaje = (finalizar - nacimiento) * 0.0001;
-					puntaje -= puntuacion;
+					
 					location.href='resultado.html?Puntaje='+puntaje+'&Win=Win&Level=1'
 					//console.log("Win");
 				}

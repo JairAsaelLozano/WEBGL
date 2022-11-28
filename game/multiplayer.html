@@ -7,16 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
-    <link rel="stylesheet" type="text/css" href="../game.css">
+    <link rel="stylesheet" type="text/css" href="./main.css">
+    <link rel="stylesheet" type="text/css" href="./game.css">
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-    <script src="../hovers.js"></script>
-    <script type="text/javascript" src="js/libs/jquery/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript" src="js/libs/three/three2.js"></script>
-	<script type="text/javascript" src="js/libs/three/MTLLoader.js"></script>
-	<script type="text/javascript" src="js/libs/three/FBXLoader.js"></script>
-	<script type="text/javascript" src="js/libs/three/OBJLoader.js"></script>
-	<script type="text/javascript" src="js/libs/three/inflate.min.js"></script>
+    <script src="hovers.js"></script>
+    <script type="text/javascript" src="game/js/libs/jquery/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="game/js/libs/three/three2.js"></script>
+	<script type="text/javascript" src="game/js/libs/three/MTLLoader.js"></script>
+	<script type="text/javascript" src="game/js/libs/three/FBXLoader.js"></script>
+	<script type="text/javascript" src="game/js/libs/three/OBJLoader.js"></script>
+	<script type="text/javascript" src="game/js/libs/three/inflate.min.js"></script>
+	<script src="player.js"></script>
+	<script src="guard.js"></script>
     <script type="text/javascript">   //CONTENIDO DEL JUEGO
 		var scene;
 		var camera;
@@ -27,15 +29,26 @@
 		var deltaTime;
 		var keys = {};
 
+		var boxPlayer;
+		var boxWin;
+		var boxGuard1;
+		var boxGuard2;
+		var boxGuard3;
+
 		var rayCaster;
 		var collisionObjects = [];
 		var isWorldReady = [false, false];
 		var jet;
-		var jet2;
 
+	
+		var nacimiento = new Date()
 		var mixers = [];
 		var mixers_2 = [];
 		var persona;
+		const renamon = new Player();
+		const guard1 = new Guard();
+		const guard2 = new Guard();
+		const guard3 = new Guard();
 		$(document).ready(function () {
 
 
@@ -43,7 +56,7 @@
 			rayCaster = new THREE.Raycaster();
 
 
-			loadOBJWithMTL("assets/BodegaNueva/", "BodegaNueva.obj", "BodegaNueva.mtl", (object) => {
+			loadOBJWithMTL("game/assets/BodegaNueva/", "BodegaNueva.obj", "BodegaNueva.mtl", (object) => {
 
 				//object.tocado = false;
 
@@ -96,18 +109,24 @@
 				*/
 				isWorldReady[0] = true;
 			});
-			loadOBJWithMTL("assets/CajaMadera/", "CajaMadera.obj", "CajaMadera.mtl", (object) => {
+			loadOBJWithMTL("game/assets/CajaMadera/", "CajaMadera.obj", "CajaMadera.mtl", (object) => {
 
-				var caja2 = object.clone();
+				/*var caja2 = object.clone();
 				object.position.z = 35;
 				object.position.x = 15;
 
 				caja2.position.y = .4;
 
-				scene.add(object, caja2);
+				scene.add(object, caja2);*/
 			});
-			loadOBJWithMTL("assets/CajaFragil/", "BoxFragil.obj", "BoxFragil.mtl", (object) => {
+			loadOBJWithMTL("game/assets/CajaFragil/", "BoxFragil.obj", "BoxFragil.mtl", (object) => {
 
+                /*Cajas*/
+				boxPlayer = object.clone();
+				boxWin = object.clone();
+				boxGuard1 = object.clone();
+				boxGuard2 = object.clone();
+				boxGuard3 = object.clone();
 
 				var box2 = object.clone();
 				var box3 = object.clone();
@@ -128,100 +147,431 @@
 				var box18 = object.clone();
 				var box19 = object.clone();
 				var box20 = object.clone();
-
 				var box21 = object.clone();
 				var box22 = object.clone();
 				var box24 = object.clone();
-
 				var box23 = object.clone();
-
 				var box25 = object.clone();
 				var box26 = object.clone();
 				var box27 = object.clone();
 				var box28 = object.clone();
+				var box29 = object.clone();
+				var box30 = object.clone();
+				var box31 = object.clone();
+				var box32 = object.clone();
+				var box33 = object.clone();
+				var box34 = object.clone();
+				var box35 = object.clone();
+				var box36 = object.clone();
+				var box37 = object.clone();
+				var box38 = object.clone();
+				var box39 = object.clone();
+				var box40 = object.clone();
+				var box41 = object.clone();
+				var box42 = object.clone();
+				var box43 = object.clone();
+				var box44 = object.clone();
+				var box45 = object.clone();
+				var box46 = object.clone();
+				var box47 = object.clone();
+				var box48 = object.clone();
+				var box49 = object.clone();
+				var box50 = object.clone();
+				var box51 = object.clone();
+				var box52 = object.clone();
+				var box53 = object.clone();
+				var box54 = object.clone();
+				var box55 = object.clone();
+				var box56 = object.clone();
+				var box57 = object.clone();
+				var box58 = object.clone();
+				var box59 = object.clone();
+				var box60 = object.clone();
+				var box61 = object.clone();
+				var box62 = object.clone();
+				var box63 = object.clone();
+				var box64 = object.clone();
+				var box65 = object.clone();
+				var box66 = object.clone();
+				var box67 = object.clone();
+				var box68 = object.clone();
+				var box69 = object.clone();
+				var box70 = object.clone();
+				var box71 = object.clone();
+				var box72 = object.clone();
+				var box73 = object.clone();
+				var box74 = object.clone();
+				var box75 = object.clone();
+				var box76 = object.clone();
+				var box77 = object.clone();
+				var box78 = object.clone();
+				var box79 = object.clone();
+				var box80 = object.clone();
+				var box81 = object.clone();
+				var box82 = object.clone();
+				var box83 = object.clone();
+				var box84 = object.clone();
+				var box85 = object.clone();
+				var box86 = object.clone();
+				var box87 = object.clone();
+				var box88 = object.clone();
+				var box89 = object.clone();
+				var box90 = object.clone();
+				var box91 = object.clone();
+				var box92 = object.clone();
+				var box93 = object.clone();
+                var box94 = object.clone();
+				var box95 = object.clone();
+				var box96 = object.clone();
+				var box97 = object.clone();
+				var box98 = object.clone();
+				var box99 = object.clone();
+				var box100 = object.clone();
+				var box101 = object.clone();
+				var box102 = object.clone();
+				var box103 = object.clone();
+				var box104 = object.clone();
+                var box105 = object.clone();
+				var box106 = object.clone();
+				var box107 = object.clone();
+				var box108 = object.clone();
+				var box109 = object.clone();
+				var box110 = object.clone();
+           
+				var box143 = object.clone();
+				var box144 = object.clone();
+				var box145 = object.clone();
+				var box146 = object.clone();
+				var box147 = object.clone();
+				var box148 = object.clone();
+				var box149 = object.clone();
+				var box150 = object.clone();
+				var box151 = object.clone();
+				var box152 = object.clone();
+				var box153 = object.clone();
+				var box154 = object.clone();
+				var box155 = object.clone();
+				var box156 = object.clone();
+				var box157 = object.clone();
+				var box158 = object.clone();
+				var box159 = object.clone();
+				var box160 = object.clone();
+				var box161 = object.clone();
+				var box162 = object.clone();
+				var box163 = object.clone();
+				var box164 = object.clone();
+				var box165 = object.clone();
+				var box166 = object.clone();
 
 
-				object.position.z = 10;
-				box2.position.z = 10;
-				box3.position.z = 10;
-				box4.position.z = 10;
-				box5.position.z = 10;
-				box6.position.z = 10;
-				box7.position.z = 10;
-				box8.position.z = 10;
-				box9.position.z = 10;
-				box10.position.z = 10;
-				box11.position.z = 10;
-
-				box12.position.z = 10;
-				box13.position.z = 10;
+			/*Posicion z*/
+				box2.position.z = 60;
+				box3.position.z = 60;
+				box4.position.z = 60;
+				box5.position.z = 55;
+				box6.position.z = 50;
+				box7.position.z = 45;
+				box8.position.z = 40;
+				box9.position.z = 35;
+				box10.position.z = 30;
+				box11.position.z = 25;
+				box12.position.z = 20;
+				box13.position.z = 15;
 				box14.position.z = 10;
-				box15.position.z = 10;
-				box16.position.z = 10;
-				box17.position.z = 10;
-				box18.position.z = 10;
-				box19.position.z = 10;
-				box20.position.z = 10;
+				box15.position.z = 5;
+				box16.position.z = 0;
+				box17.position.z = -5;
+				box18.position.z = -10;
+				box19.position.z = -15;
+				box20.position.z = -20;
+				box21.position.z = -25;
+				box22.position.z = -30;
+				box23.position.z = -35;
+				box24.position.z = -40;
+				box25.position.z = -45;
+				box26.position.z = -45;
+				box27.position.z = -45;
+				box28.position.z = -45;
+				box29.position.z = -45;
+				box30.position.z = -45;
+				box31.position.z = -45;
+				box32.position.z = -40;
+				box33.position.z = -35;
+				box34.position.z = -30;
+				box35.position.z = -25;
+				box36.position.z = -20;
+				box37.position.z = -15;
+				box38.position.z = -10;
+				box39.position.z = -5;
+				box40.position.z = 0;
+				box41.position.z = 5;
+				box42.position.z = 10;
+				box43.position.z = 15;
+				box44.position.z = 20;
+				box45.position.z = 25;
+				box46.position.z = 30;
+				box47.position.z = 35;
+				box48.position.z = 40;
+				box49.position.z = 45;
+				box50.position.z = 50;
+				box51.position.z = 55;
+				box52.position.z = 60;
+				box53.position.z = 60;
+				box54.position.z = 60;
+                box55.position.z = -40;
+                box56.position.z = -35;
+                box57.position.z = -30;
+                box58.position.z = -25;
+                box59.position.z = -20;
+                box60.position.z = -40;
+                box61.position.z = -35;
+                box62.position.z = -30;
+                box63.position.z = -25;
+                box64.position.z = -20;
+				box65.position.z = 0;
+                box66.position.z = -20;
+                box67.position.z = -20;
+                box68.position.z = 0;
+                box69.position.z = 0;
+                box70.position.z = 0;
+                box71.position.z = 0;
+                box72.position.z = 0;
+                box73.position.z = 5;
+                box74.position.z = 5;
+                box75.position.z = 5;
+                box76.position.z = 5;
+                box77.position.z = 5;
+                box78.position.z = 5;
+                box79.position.z =15;
+                box80.position.z =15;
+                box81.position.z =15;
+                box82.position.z =15;
+                box83.position.z =15;
+                box84.position.z =15;
+                box85.position.z =15;
+                box86.position.z =15;
+                box87.position.z =27;
+                box88.position.z =32;
+                box89.position.z =42;
+                box90.position.z =47;
+                box91.position.z =27;
+                box92.position.z =32;
+                box93.position.z =42;
+                box94.position.z =47;
+                box95.position.z =27;
+                box96.position.z =32;
+                box97.position.z =42;
+                box98.position.z =47;
+                box99.position.z =27;
+                box100.position.z =32;
+                box101.position.z =42;
+                box102.position.z =47;
+                box103.position.z =27;
+                box104.position.z =32;
+                box105.position.z =42;
+                box106.position.z =47;
+                box107.position.z =27;
+                box108.position.z =32;
+                box109.position.z =42;
+                box110.position.z =47;
+                box143.position.z =27;
+                box144.position.z =32;
+                box145.position.z =42;
+                box146.position.z =47;
+                box147.position.z =27;
+                box148.position.z =32;
+                box149.position.z =42;
+                box150.position.z =47;
+                box151.position.z =27;
+                box152.position.z =32;
+                box153.position.z =42;
+                box154.position.z =47;
+                box155.position.z =27;
+                box156.position.z =32;
+                box157.position.z =42;
+                box158.position.z =47;
+                box159.position.z =27;
+                box160.position.z =32;
+                box161.position.z =42;
+                box162.position.z =47;
+                box163.position.z =27;
+                box164.position.z =32;
+                box165.position.z =42;
+                box166.position.z =47;
 
-				box21.position.z = 40;
-				box22.position.z = 40;
-				box23.position.z = 40;
-				box24.position.z = 40;
 
-				box25.position.z = -20;
-				box26.position.z = -20;
-				box27.position.z = -30;
-				box28.position.z = -35;
+				/*Posicion z*/
 
-				box12.position.y = 5;
-				box13.position.y = 5;
-				box14.position.y = 5;
-				box15.position.y = 5;
-				box16.position.y = 5;
-				box17.position.y = 5;
-				box18.position.y = 5;
-				box19.position.y = 5;
-				box20.position.y = 5;
+				/*Posicion x*/
+				box2.position.x = 20;
+				box3.position.x = 15;
+		        box4.position.x = 25;
+				box5.position.x = 27;
+				box6.position.x = 27;
+				box7.position.x = 27;
+				box8.position.x = 27;
+				box9.position.x = 27;
+				box10.position.x = 27;
+				box11.position.x = 27;
+				box12.position.x = 27;
+				box13.position.x = 27;
+				box14.position.x = 27;
+				box15.position.x = 27;
+				box16.position.x = 27;
+				box17.position.x = 27;
+				box18.position.x = 27;
+				box19.position.x = 27;
+				box20.position.x = 27;
+				box21.position.x = 27;
+				box22.position.x = 27;
+				box23.position.x = 27;
+				box24.position.x = 27;
+				box25.position.x = 27;
+				box26.position.x = 22;
+				box27.position.x = 17;
+				box28.position.x = -8;
+				box29.position.x = -13;
+				box30.position.x = -18;
+				box31.position.x = -23;
+				box32.position.x = -25;
+				box33.position.x = -25;
+				box33.position.x = -25;
+				box34.position.x = -25;
+				box35.position.x = -25;
+				box36.position.x = -25;
+				box37.position.x = -25;
+				box38.position.x = -25;
+				box39.position.x = -25;
+				box40.position.x = -25;
+				box41.position.x = -25;
+				box42.position.x = -25;
+				box43.position.x = -25;
+				box44.position.x = -25;
+				box45.position.x = -25;
+				box46.position.x = -25;
+				box47.position.x = -25;
+				box48.position.x = -25;
+				box49.position.x = -25;
+				box50.position.x = -25;
+				box51.position.x = -25;
+				box52.position.x = -25;
+				box53.position.x = -20;
+				box54.position.x = -15;
+                box55.position.x = 15;
+                box56.position.x = 15;
+                box57.position.x = 15;
+                box58.position.x = 15;
+                box59.position.x = 15;
+                box60.position.x = -8;
+                box61.position.x = -8;
+                box62.position.x = -8;
+                box63.position.x = -8;
+                box64.position.x = -8;
+                box65.position.x = 0;
+                box66.position.x = 10;
+                box67.position.x = -3;
+                box68.position.x = 5;
+                box69.position.x = -5;
+                box70.position.x = 10;
+                box71.position.x = -10;
+                box72.position.x = 15;
+                box73.position.x = 0;
+                box74.position.x = 5;
+                box75.position.x = -5;
+                box76.position.x = 10;
+                box77.position.x = -10;
+                box78.position.x = 15;
+                box79.position.x = 22;
+                box80.position.x = 17;
+                box81.position.x = 12;
+                box82.position.x = 7;
+                box83.position.x = -20;
+                box84.position.x = -15;
+                box85.position.x = -10;
+                box86.position.x = -5;
+                box87.position.x = -15;
+                box88.position.x = -15;
+                box89.position.x = -15;
+                box90.position.x = -15;
+                box91.position.x = -10;
+                box92.position.x = -10;
+                box93.position.x = -10;
+                box94.position.x = -10;
+                box95.position.x = -5;
+                box96.position.x = -5;
+                box97.position.x = -5;
+                box98.position.x = -5;
+                box99.position.x = 5;
+                box100.position.x =5;
+                box101.position.x =5;
+                box102.position.x =5;
+                box103.position.x =10;
+                box104.position.x =10;
+                box105.position.x =10;
+                box106.position.x =10;
+                box107.position.x =15;
+                box108.position.x =15;
+                box109.position.x =15;
+                box110.position.x =15;
+               
+                box143.position.x = -15;
+                box144.position.x = -15;
+                box145.position.x = -15;
+                box146.position.x = -15;
+                box147.position.x = -10;
+                box148.position.x = -10;
+                box149.position.x = -10;
+                box150.position.x = -10;
+                box151.position.x = -5;
+                box152.position.x = -5;
+                box153.position.x = -5;
+                box154.position.x = -5;
+                box155.position.x = 5;
+                box156.position.x =5;
+                box157.position.x =5;
+                box158.position.x =5;
+                box159.position.x =10;
+                box160.position.x =10;
+                box161.position.x =10;
+                box162.position.x =10;
+                box163.position.x =15;
+                box164.position.x =15;
+                box165.position.x =15;
+                box166.position.x =15;
 
 
-				box22.position.y = 5;
+				/*Posicion x*/
+				
+				/*Posicion y*/
+                box143.position.y = 5;
+                box144.position.y = 5;
+                box145.position.y = 5;
+                box146.position.y = 5;
+                box147.position.y = 5;
+                box148.position.y = 5;
+                box149.position.y = 5;
+                box150.position.y = 5;
+                box151.position.y = 5;
+                box152.position.y = 5;
+                box153.position.y = 5;
+                box154.position.y = 5;
+                box155.position.y = 5;
+                box156.position.y =5;
+                box157.position.y =5;
+                box158.position.y =5;
+                box159.position.y =5;
+                box160.position.y =5;
+                box161.position.y =5;
+                box162.position.y =5;
+                box163.position.y =5;
+                box164.position.y =5;
+                box165.position.y =5;
+                box166.position.y =5;
 
 
-
-
-				box12.position.x = 3.5;
-				box13.position.x = 10.5;
-				box14.position.x = 17.5;
-				box15.position.x = 25.5;
-				box16.position.x = 32.5;
-				box17.position.x = -4.5;
-				box18.position.x = -11.5;
-				box19.position.x = -18.5;
-				box20.position.x = -25.5;
-
-				box21.position.x = 10;
-				box22.position.x = 10;
-				box24.position.x = 15;
-				box23.position.x = -15;
-
-				box25.position.x = 10;
-				box26.position.x = 20;
-				box27.position.x = 0;
-				box28.position.x = -10;
-
-
-				object.position.x = 0;
-				box4.position.x = 7;
-				box5.position.x = -7;
-				box6.position.x = 14;
-				box7.position.x = -14;
-				box8.position.x = 21;
-				box9.position.x = -21;
-				box10.position.x = 28;
-				box11.position.x = -28;
-
-
-
+				/*Posicion y*/
+				
+				
 				/*var box7 = object.clone();
 				var box8 = object.clone();
 				var box9 = object.clone();
@@ -229,28 +579,42 @@
 				var box11 = object.clone();
 				var box12 = object.clone();
 				var box13 = object.clone();*/
-				scene.add(object, box4, box5, box6, box7, box8, box9, box10, box11, box12,
+				scene.add(object,box2,box3 ,box4, box5, box6, box7, box8, box9, box10, box11, box12,
 					box13, box14, box15, box17, box18, box19, box20, box21, box22, box23, box24,
-					box25, box26, box27, box28);
+					box25, box26, box27, box28,box29,box30,box31,box32,box33,box34,box35,box36,box37,
+					box38,box39,box40,box41,box42,box43,box44,box45,box46,box47,box48,box49,box50,box51
+					,box52,box53,box54,box55,box56,box57,box58,box59,box60,box61,box62,box63,box64,box65,
+					box66,box67,box68,box69,box70,box71,box72,box73,box74,box75,box76,box77,box78,box79,
+					box80,box81,box82,box83,box84,box85,box86,box87,box88,box89,box90,box91,box92,box93,
+                    box94, box95, box96, box97, box98, box99,box100,box101,box102,box103,box104,box105,
+                    box106,box107,box108,box109,box110, box143, box144, box145, box146, box147, box148, box149,
+                    box150, box151, box152, box153, box154, box155, box156, box157, box158, box159, box160, 
+                    box161, box162, box163,box164, box165, box166);
+
+				collisionObjects.push(object,box2,box3 ,box4, box5, box6, box7, box8, box9, box10, box11, box12,
+					box13, box14, box15, box17, box18, box19, box20, box21, box22, box23, box24,
+					box25, box26, box27, box28,box29,box30,box31,box32,box33,box34,box35,box36,box37,
+					box38,box39,box40,box41,box42,box43,box44,box45,box46,box47,box48,box49,box50,box51
+					,box52,box53,box54,box55,box56,box57,box58,box59,box60,box61,box62,box63,box64,box65,
+					box66,box67,box68,box69,box70,box71,box72,box73,box74,box75,box76,box77,box78,box79,
+					box80,box81,box82,box83,box84,box85,box86,box87,box88,box89,box90,box91,box92,box93,
+                    box94, box95, box96, box97, box98, box99,box100,box101,box102,box103,box104,box105,
+                    box106,box107,box108,box109,box110, box143, box144, box145, box146, box147, box148, box149,
+                    box150, box151, box152, box153, box154, box155, box156, box157, box158, box159, box160, 
+                    box161, box162, box163,box164, box165, box166);
 
 			});
-			loadOBJWithMTL("assets/", "jetski.obj", "jetski.mtl", (object) => {
-				object.position.z = 30;
-				object.rotation.x = THREE.Math.degToRad(-90);
-				object.name = "jetski"
-				scene.add(object);
-				jet = object;
-				isWorldReady[1] = true;
-			});
+			// loadOBJWithMTL("game/assets/", "jetski.obj", "jetski.mtl", (object) => {
+			// 	object.position.z = 30;
+			// 	object.rotation.x = THREE.Math.degToRad(-90);
+			// 	object.name = "jetski"
 
-			loadOBJWithMTL("assets/", "jetski.obj", "jetski.mtl", (object) => {
-				object.position.z = 30;
-				object.rotation.x = THREE.Math.degToRad(-90);
-				object.name = "jetski2"
+			// 	scene.add(object);
+			// 	jet = object;
 				
-				scene.add(object);
-				jet2 = object;
-			});
+			// });
+
+			isWorldReady[1] = true;
 				
 
 			// var loader = new THREE.FBXLoader();
@@ -293,6 +657,37 @@
 			//});
 
 
+			lockJump = false;
+
+			renamon.setModel('Renamon/chr391 with animations.fbx', renamon, 3.0, 0.0, -27);
+
+			guard1.setModel('SkullMeramon/chr406 with animations.fbx', guard1, 20.5, 0.0, -5.0);
+
+			guard1.setPositions([20.5, -5.0]);
+			guard1.setPositions([-18.5, -5.0]);
+			guard1.setPositions([-18.5, -10.0]);
+			guard1.setPositions([20.5, -10.0]);
+			guard1.speed = 7;
+			guard1.patrol = 2;
+
+			guard2.setModel('SkullMeramon/chr406 with animations.fbx', guard2, 20.5, 0.0, 20.5);
+
+			guard2.setPositions([20.5, 20.5]);
+			guard2.setPositions([-18.5, 20.5]);
+			guard2.setPositions([-18.5, 36.0]);
+			guard2.setPositions([20.5, 36.0]);
+			guard2.speed = 7;
+			guard2.patrol = 2;
+
+			guard3.setModel('SkullMeramon/chr406 with animations.fbx', guard3, 20.5, 0.0, 37);
+
+			guard3.setPositions([20.5, 37.0]);
+			guard3.setPositions([0.3, 37.0]);
+			guard3.setPositions([0.3, 52.0]);
+			guard3.setPositions([20.5, 52.0]);
+			guard3.speed = 7;
+			guard3.patrol = 2;
+
 
 			render();
 
@@ -329,73 +724,247 @@
 			requestAnimationFrame(render);
 			deltaTime = clock.getDelta();
 
-			var yaw = 0;
-			var forward = 0;
+		var playerMovX = 0;
+		var playerMovY = 0;
+		var playerMovZ = 0;
+
+		var hiddenPlayer = false;
+
+		if(renamon.beggin){
+			renamon.setIndex(0);
+		}
+		else if(lockJump){
 			if (keys["A"]) {
-				yaw = 5;
-			} else if (keys["D"]) {
-				yaw = -5;
+				playerMovX = -10;
 			}
-			if (keys["W"]) {
-				forward = 20;
-			} else if (keys["S"]) {
-				forward = -20;
+			else if (keys["D"]) {
+				playerMovX = 10;
 			}
-
-			var yaw2 = 0;
-			var forward2 = 0;
-			if (keys["J"]) {
-				yaw2 = 5;
-			} else if (keys["L"]) {
-				yaw2 = -5;
-			}
-			if (keys["I"]) {
-				forward2 = 20;
-			} else if (keys["K"]) {
-				forward2 = -20;
+			
+			if(!renamon.getIsJump(0)){
+				lockJump = false;
 			}
 
+			if(!renamon.jumping && !renamon.isJump){
+				renamon.resetAnimation = true;
+				renamon.jumping = true;
+				renamon.isJump = true;
+			}
+			renamon.setIndex(4);
+			
+		}
+		else if(keys["E"]){
+			lockJump = true;
+			
+		}
+		else if(keys["Q"]){
+			hiddenPlayer = true;
+			if (keys["A"]) {
+				playerMovX = -3;
+				renamon.setIndex(3);
+			}
+			else if (keys["D"]) {
+				playerMovX = 3;
+				renamon.setIndex(3);
+			}
+			else if (keys["W"]) {
+				playerMovZ = -3;
+				renamon.setIndex(3);
+			}
+			else if (keys["S"]) {
+				playerMovZ = 3;
+				renamon.setIndex(3);
+			}
+			else{
+				renamon.setIndex(1);
+			}
+
+		}
+		else{
+			if (keys["A"]) {
+				playerMovX = -10;
+				renamon.setIndex(2);
+			}
+			else if (keys["D"]) {
+				playerMovX = 10;
+				renamon.setIndex(2);
+			}
+			else if (keys["W"]) {
+				playerMovZ = -10;
+				renamon.setIndex(2);
+			}
+			else if (keys["S"]) {
+				playerMovZ = 10;
+				renamon.setIndex(2);
+			}
+			else{
+				renamon.setIndex(1);
+			}
+		}
+		
+		
 
 
 
 
-
+			// var yaw = 0;
+			// var forward = 0;
+			// if (keys["A"]) {
+			// 	yaw = 5;
+			// } else if (keys["D"]) {
+			// 	yaw = -5;
+			// }
+			// if (keys["W"]) {
+			// 	forward = 20;
+			// } else if (keys["S"]) {
+			// 	forward = -20;
+			// }
 
 			if (isWorldReady[0] && isWorldReady[1]) {
-				jet.rotation.z += yaw * deltaTime;
-				jet.translateY(forward * deltaTime);
-
-				jet2.rotation.z += yaw2 * deltaTime;
-				jet2.translateY(forward2 * deltaTime);
-
-
-
-				// Collision
-				/*
-				for (var i = 0; i < collisionObjects.length; i++) {
-
-					var collision = detectCollision(jet, collisionObjects[i]);
-
-					if (collision) {
-						// Si esta colisionando entonces le asignamos la ultima posicion conocida antes de colisionar
-						jet.translateY(-(forward * deltaTime));
-						collisionObjects[i].tocado = 1;
-						debugger
-						console.log("colisionando");
-						break;
-					}
-
-
-				} 
-				for (j = 0; j < collisionObjects.length; j++) {
-					if (collisionObjects[j].tocado == 1) {
-						collisionObjects[j].rotation.x -= 1 * deltaTime;
-					}
-				}*/
+			
 
 			
 
-				camera.lookAt(jet.position);
+				boxWin.position.x = -3.5;
+				boxWin.position.y = 0;
+				boxWin.position.z = 59;
+				boxWin.scale.set(1, 2, 0.5);
+
+				boxPlayer.position.x = renamon.getPositionx();
+				boxPlayer.position.z = renamon.getPositionz();
+				boxPlayer.position.y = 0;
+				boxPlayer.scale.set(0.5, 2, 0.5);
+
+				if (keys["A"]) {
+					boxPlayer.position.x += -10 * deltaTime;
+				} else if (keys["D"]) {
+					boxPlayer.position.x += 10 * deltaTime;
+				}
+				if (keys["W"]) {
+					boxPlayer.position.z += -10 * deltaTime;
+				} else if (keys["S"]) {
+					boxPlayer.position.z += 10 * deltaTime;
+				}
+				
+				for (var i = 0; i < collisionObjects.length; i++) {
+					var collision = detectCollision(boxPlayer, collisionObjects[i]);
+					if (collision) {
+						playerMovX = 0;
+						playerMovZ = 0;
+					}
+				} 
+
+				if(detectCollision(boxPlayer,boxWin)){
+					var finalizar = new Date()
+					var puntaje = (finalizar - nacimiento) * 0.0001;
+			
+					location.href='resultado.html?Puntaje='+puntaje+'&Win=Win&Level=3'
+			
+				}
+
+				//console.log("X: " + boxPlayer.position.x + "_Z: " + boxPlayer.position.z);
+				if(renamon.catched){
+					renamon.playAnimation(0, 0, 0);
+				}else{
+					renamon.playAnimation(playerMovX, playerMovY, playerMovZ);
+				}
+
+
+				guard1.play();
+				boxGuard1.position.x = guard1.getPositionx();
+				if(guard1.selectDir == 1 || guard1.selectDir == 2){
+					boxGuard1.position.x += 8;
+				}else if(guard1.selectDir == 0 || guard1.selectDir == 3){
+					boxGuard1.position.x -= 8;
+				}
+
+				boxGuard1.position.z = guard1.getPositionz();
+				if(guard1.selectDir == 4 || guard1.selectDir == 5){
+					boxGuard1.position.z += 8;
+				}else if(guard1.selectDir == 6 || guard1.selectDir == 7){
+					boxGuard1.position.z -= 8;
+				}
+
+				boxGuard1.position.y = 0;
+				if(hiddenPlayer){
+					boxGuard1.scale.set(2, 2, 1);
+				}else{
+					boxGuard1.scale.set(3, 2, 1.5);
+				}
+				boxGuard1.rotation.y = guard1.modelRef.rotation.y + THREE.Math.degToRad(90);
+
+				if(detectCollision(boxPlayer,boxGuard1)){
+					location.href='perdida.html'
+					console.log("Lose");
+					guard1.setCatch(true, renamon.getPositionx(), renamon.getPositionz());
+					renamon.setCatched(true);
+				}
+
+				guard2.play();
+				boxGuard2.position.x = guard2.getPositionx();
+				if(guard2.selectDir == 1 || guard2.selectDir == 2){
+					boxGuard2.position.x += 8;
+				}else if(guard2.selectDir == 0 || guard2.selectDir == 3){
+					boxGuard2.position.x -= 8;
+				}
+
+				boxGuard2.position.z = guard2.getPositionz();
+				if(guard2.selectDir == 4 || guard2.selectDir == 5){
+					boxGuard2.position.z += 8;
+				}else if(guard2.selectDir == 6 || guard2.selectDir == 7){
+					boxGuard2.position.z -= 8;
+				}
+
+				boxGuard2.position.y = 0;
+				if(hiddenPlayer){
+					boxGuard2.scale.set(2, 2, 1);
+				}else{
+					boxGuard2.scale.set(3, 2, 1.5);
+				}
+				boxGuard2.rotation.y = guard2.modelRef.rotation.y + THREE.Math.degToRad(90);
+
+				if(detectCollision(boxPlayer,boxGuard2)){
+					location.href='perdida.html'
+					console.log("Lose");
+					guard2.setCatch(true, renamon.getPositionx(), renamon.getPositionz());
+					renamon.setCatched(true);
+				}
+
+				guard3.play();
+				boxGuard3.position.x = guard3.getPositionx();
+				if(guard3.selectDir == 1 || guard3.selectDir == 2){
+					boxGuard3.position.x += 8;
+				}else if(guard3.selectDir == 0 || guard3.selectDir == 3){
+					boxGuard3.position.x -= 8;
+				}
+
+				boxGuard3.position.z = guard3.getPositionz();
+				if(guard3.selectDir == 4 || guard3.selectDir == 5){
+					boxGuard3.position.z += 8;
+				}else if(guard3.selectDir == 6 || guard3.selectDir == 7){
+					boxGuard3.position.z -= 8;
+				}
+
+				boxGuard3.position.y = 0;
+				if(hiddenPlayer){
+					boxGuard3.scale.set(2, 2, 1);
+				}else{
+					boxGuard3.scale.set(3, 2, 1.5);
+				}
+				boxGuard3.rotation.y = guard3.modelRef.rotation.y + THREE.Math.degToRad(90);
+
+				if(detectCollision(boxPlayer,boxGuard3)){
+					location.href='perdida.html'
+					console.log("Lose");
+					guard3.setCatch(true, renamon.getPositionx(), renamon.getPositionz());
+					renamon.setCatched(true);
+				}
+
+				// camera.position.x = renamon.getPositionx();
+				// camera.position.z = renamon.getPositionz() + 1;
+				// camera.position.y = 15;
+
+				camera.lookAt(renamon.getPosition());
 			}
 
 
@@ -415,9 +984,9 @@
 			clock = new THREE.Clock();
 			scene = new THREE.Scene();
 			camera = new THREE.PerspectiveCamera(75, visibleSize.width / visibleSize.height, 0.1, 100);
-            debugger
-			camera.position.z = -5;
-			camera.position.x = 0;
+            //debugger
+			camera.position.z = 35;
+			camera.position.x = 20;
 			camera.position.y = 20;
 
 			camera.rays = [
@@ -483,22 +1052,22 @@
     <div class="game-background-start" id="scene-section">
 
         <div class="menu-padre">
-            <button id="pause" type="button"><img id="pausamulti" onmouseover="onHoverPausaMulti();" onmouseout="offHoverPausaMulti();"
-                    src="../imagenes//botones/pausa.png" height="60" width="100" /></button>
+            <button id="pause" type="button"><img id="pausa" onmouseover="onHoverPausa();" onmouseout="offHoverPausa();"
+                    src="./imagenes//botones/pausa.png" height="60" width="100" /></button>
             <div id="pausediv" class="game-pause">
-                <button id="reanudarbutton" type="button"><img id="reanudarmulti"
-                        onmouseover="onHoverRenaudarMulti();" onmouseout="offHoverRenaudarMulti();" src="../imagenes//botones/reanudar.png"
+                <button id="reanudarbutton" type="button"><img id="reanudar"
+                        onmouseover="onHoverRenaudar();" onmouseout="offHoverRenaudar();" src="./imagenes//botones/reanudar.png"
                         height="80" width="120" /></button>
-                <button id="configuracionbutton" type="button"><img id="settingsmulti"
-                        onmouseover="onHoverSettingsMulti();" onmouseout="offHoverSettingsMulti();"
-                        src="../imagenes//botones/ajustes.png" height="80" width="120" /></button>
-                <button onclick="location.href='../menu.html'" id="salirbutton" type="button"><img id="salirmulti"
-                        onmouseover="onHoverSalirMulti();" onmouseout="offHoverSalirMulti();"
-                        src="../imagenes//botones/salir.png" height="80" width="120" /></button>
+                <button id="configuracionbutton" type="button"><img id="settings"
+                        onmouseover="onHoverSettings();" onmouseout="offHoverSettings();"
+                        src="./imagenes//botones/ajustes.png" height="80" width="120" /></button>
+                <button onclick="location.href='menu.html'" id="salirbutton" type="button"><img id="salir"
+                        onmouseover="onHoverSalir();" onmouseout="offHoverSalir();"
+                        src="./imagenes//botones/salir.png" height="80" width="120" /></button>
 
             </div>
         </div>
-
+	
 
 
 
