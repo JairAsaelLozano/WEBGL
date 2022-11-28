@@ -123,3 +123,21 @@ float:left;
         background-position: bottom;
     }
 }
+
+.Puntaje{
+    float:right;
+    border-radius: 25px;
+    width: 33%;
+   
+    margin: 20% 10%;
+    align-items: center;
+}
+.Puntaje button, label{
+    text-align: left;
+    display:flex;
+    margin: 1em auto;
+    outline: none;
+    border:0;
+    padding: 0;
+}
+

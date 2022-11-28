@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./main.css">
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="hovers.js"></script>
+</head>
+
+<body>
+    <div class="game-background">
+        <div class="main-menu">
+
+        </div>
+        <div class="Puntaje">
+            <label style="color:aliceblue;"><b>Escribe tu nombre</b></label>
+            <input name="Nombre" id="Nombre" type="text">
+            <input name="Puntaje" id="Puntaje" type="number" disabled>
+            <button onclick="enviarpuntaje()">Enviar</button>
+
+        </div>
+    </div>
+
+
+</body>
+<script>
+    function enviarpuntaje(){
+     
+            var dataToSend = { action: "addPuntaje", 
+								name:  $("#Nombre").val(),
+								puntaje:  $("#Puntaje").val()};
+
+			
+				$.ajax({
+					url: "./conexion.php",
+					async: true,
+					type: 'POST',
+					data: dataToSend,
+					success: function (data) {
+					
+						location.href="menu.html";
+				
+
+					},
+					error: function (x, y, z) {
+						alert("error en webservice" + x + y + z);
+					}
+				});
+        }
+    $(document).ready(function () {
+        let params = new URLSearchParams(location.search);
+
+        var contract = params.get('Puntaje');
+ 
+        $("#Puntaje").val(contract);
+
+
+        
+    });
+
+</script>
+
+</html>
