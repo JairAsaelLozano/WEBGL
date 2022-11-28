@@ -15,8 +15,11 @@
 <body>
     <div class="game-background">
         <div class="main-menu">
-
+       
         </div>
+        <audio id="miaudio" autoplay loop>
+            <source id="miaudio" src="game/assets/Audio/maintheme.mp3" type="audio/mp3">
+        </audio>
         <div class="main-buttons">
             <button id="jugarbutton" onclick="location.href='selectlevels.html'" type="button"><img id="jugar" onmouseover="onHoverJugar();" onmouseout="offHoverJugar();" src="./imagenes//botones/jugar.png" height="80" width="120" /></button>
             <button id="multijugadorbutton"  onclick="location.href='multi.html'" type="button"><img id="multijugador" onmouseover="onHoverMultijugador();" onmouseout="offHoverMultijugador();" src="./imagenes//botones/multijugador.png" height="80" width="120" /></button>
@@ -28,6 +31,12 @@
     
 
 </body>
+<script>
+     $(document).ready(function () {
+     document.getElementById("miaudio").volume = 0.01;
+      
 
+     })
+</script>
 
 </html>

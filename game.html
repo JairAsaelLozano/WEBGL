@@ -745,8 +745,13 @@
 
 <body>
     <div class="game-background-start" id="scene-section">
-
+		<audio id="miaudio" autoplay loop>
+            <source id="miaudio" src="game/assets/Audio/007.mp3" type="audio/mp3">
+        </audio>
         <div class="menu-padre">
+			<audio style="display:none;">
+				<source src="~/Audios/NUMEROS/ONE.ogg" type="audio/ogg">
+			</audio>
             <button id="pause" type="button"><img id="pausa" onmouseover="onHoverPausa();" onmouseout="offHoverPausa();"
                     src="./imagenes//botones/pausa.png" height="60" width="100" /></button>
             <div id="pausediv" class="game-pause">
@@ -774,7 +779,10 @@
 
 </body>
 <script>
-
+	$(document).ready(function () {
+    $(".audio")[0].play();
+	debugger
+});
 
     const div = document.querySelector(".game-pause");
     const divbackground = document.querySelector(".game-background-start");
@@ -785,7 +793,8 @@
     
 
     });
-
+	document.getElementById("miaudio").volume = 0.05;
+      
     document.querySelector("#reanudarbutton").addEventListener("click", () => {
         div.classList.remove("show_hide");
     });
