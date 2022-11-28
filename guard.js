@@ -1,4 +1,4 @@
-class Player {
+class Guard {
  
     constructor(){
         this.state = 1;
@@ -40,10 +40,10 @@ class Player {
 
 			myModel.mixers.push(object.mixer);
 
-            myModel.start = object.mixer.clipAction(object.animations[10]);
-			myModel.stopped = object.mixer.clipAction(object.animations[9]);
-            myModel.walk = object.mixer.clipAction(object.animations[4]);
-            myModel.jump = object.mixer.clipAction(object.animations[2]);
+            myModel.start = object.mixer.clipAction(object.animations[0]);
+			myModel.stopped = object.mixer.clipAction(object.animations[5]);
+            myModel.walk = object.mixer.clipAction(object.animations[2]);
+            myModel.jump = object.mixer.clipAction(object.animations[10]);
 
             myModel.start.play();
 			myModel.stopped.play();
@@ -68,28 +68,6 @@ class Player {
 		});
     }
 
-    getIsJump(floor){
-        if(this.isJump){
-            if(this.jumping){
-                this.y += 0.1;
-                this.y = Math.round((this.y + Number.EPSILON) * 100) / 100;
-
-                if(this.y >= this.maxJump){
-                    this.jumping = false;
-                }
-            }else{
-                this.y -= 0.1;
-                this.y = Math.round((this.y + Number.EPSILON) * 100) / 100;
-
-                if(this.y <= floor){
-                    this.isJump = false;
-                }
-            }
-        }
-
-        return this.isJump;
-    }
-
     getPosition(){
         return this.modelRef.position;
     }
@@ -100,7 +78,7 @@ class Player {
         return this.modelRef.position.z;
     }
 
-    playAnimation(playerMovX, playerMovY, playerMovZ){
+    playAnimation(guardMovX, guardMovY, guardMovZ){
         switch(this.index){
             case 0:{
                 this.start.weight = 1;
@@ -124,19 +102,19 @@ class Player {
                 this.walk.weight = 1;
                 this.jump.weight = 0;
 
-                this.modelRef.position.x += playerMovX*deltaTime;
-                this.modelRef.position.z += playerMovZ*deltaTime;
+                this.modelRef.position.x += guardMovX*deltaTime;
+                this.modelRef.position.z += guardMovZ*deltaTime;
 
-                if(playerMovX > 0 && playerMovZ == 0){
+                if(guardMovX > 0 && guardMovZ == 0){
                     this.modelRef.rotation.y = THREE.Math.degToRad(90);
                 }
-                else if(playerMovX < 0 && playerMovZ == 0){
+                else if(guardMovX < 0 && guardMovZ == 0){
                     this.modelRef.rotation.y = THREE.Math.degToRad(-90);
                 }
-                else if(playerMovZ > 0 && playerMovX == 0){
+                else if(guardMovZ > 0 && guardMovX == 0){
                     this.modelRef.rotation.y = THREE.Math.degToRad(0);
                 }
-                else if (playerMovZ < 0 && playerMovX == 0) {
+                else if (guardMovZ < 0 && guardMovX == 0) {
                     this.modelRef.rotation.y = THREE.Math.degToRad(180);
                 }
 
@@ -148,19 +126,19 @@ class Player {
                 this.walk.weight = 1;
                 this.jump.weight = 0;
 
-                this.modelRef.position.x += playerMovX*deltaTime;
-                this.modelRef.position.z += playerMovZ*deltaTime;
+                this.modelRef.position.x += guardMovX*deltaTime;
+                this.modelRef.position.z += guardMovZ*deltaTime;
 
-                if(playerMovX > 0 && playerMovZ == 0){
+                if(guardMovX > 0 && guardMovZ == 0){
                     this.modelRef.rotation.y = THREE.Math.degToRad(90);
                 }
-                else if(playerMovX < 0 && playerMovZ == 0){
+                else if(guardMovX < 0 && guardMovZ == 0){
                     this.modelRef.rotation.y = THREE.Math.degToRad(-90);
                 }
-                else if(playerMovZ > 0 && playerMovX == 0){
+                else if(guardMovZ > 0 && guardMovX == 0){
                     this.modelRef.rotation.y = THREE.Math.degToRad(0);
                 }
-                else if (playerMovZ < 0 && playerMovX == 0) {
+                else if (guardMovZ < 0 && guardMovX == 0) {
                     this.modelRef.rotation.y = THREE.Math.degToRad(180);
                 }
 
@@ -172,7 +150,7 @@ class Player {
                 this.walk.weight = 0;
                 this.jump.weight = 1;
 
-                this.modelRef.position.x += playerMovX*deltaTime;
+                this.modelRef.position.x += guardMovX*deltaTime;
                 if(this.jumping){
                     this.modelRef.position.y += 8*deltaTime;
                 }else{
@@ -184,10 +162,10 @@ class Player {
                 //console.log(this.modelRef.position.y);
 
 
-                if(playerMovX > 0){
+                if(guardMovX > 0){
                     this.modelRef.rotation.y = THREE.Math.degToRad(90);
                 }
-                else if(playerMovX < 0){
+                else if(guardMovX < 0){
                     this.modelRef.rotation.y = THREE.Math.degToRad(-90);
                 }
 
@@ -199,12 +177,6 @@ class Player {
         if (this.mixers.length > 0) {
             for (var i = 0; i < this.mixers.length; i++) {
                 this.mixers[i].update(deltaTime);
-                if(this.beggin){
-                    this.countBeggin += 1;
-                    if(this.countBeggin > 10100*deltaTime){
-                        this.beggin = false;
-                    }
-                }
             }
         }
     }
