@@ -2,16 +2,16 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="./main.css">
-    <link rel="stylesheet" type="text/css" href="./game.css">
-    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-    <script src="hovers.js"></script>
-    <script type="text/javascript" src="game/js/libs/jquery/jquery-2.1.4.min.js"></script>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="./main.css">
+	<link rel="stylesheet" type="text/css" href="./game.css">
+	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+	<script src="hovers.js"></script>
+	<script type="text/javascript" src="game/js/libs/jquery/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="game/js/libs/three/three2.js"></script>
 	<script type="text/javascript" src="game/js/libs/three/MTLLoader.js"></script>
 	<script type="text/javascript" src="game/js/libs/three/FBXLoader.js"></script>
@@ -20,7 +20,8 @@
 	<script src="player.js"></script>
 	<script src="guard.js"></script>
 	<script src="consumables.js"></script>
-    <script type="text/javascript">   //CONTENIDO DEL JUEGO
+
+	<script type="text/javascript">   //CONTENIDO DEL JUEGO
 		var scene;
 		var camera;
 		var renderer;
@@ -39,21 +40,23 @@
 		var isWorldReady = [false, false];
 		var jet;
 
-		
-		
+
+
 		var mixers = [];
 		var mixers_2 = [];
 		var persona;
 		var nacimiento = new Date()
 		const renamon = new Player();
 		const guard = new Guard();
-
+		var reproducirParticulas = false;
+		var contadorAnim = 0;
+		var duracionParticula = 2;
 		var consumable1 = new Consumables();
 		var consumable2 = new Consumables();
 		var consumable3 = new Consumables();
 		var key = 0;
 		$(document).ready(function () {
-			
+
 
 			setupScene();
 			rayCaster = new THREE.Raycaster();
@@ -66,7 +69,7 @@
 
 
 				scene.add(object);
-			
+
 				isWorldReady[0] = true;
 			});
 			loadOBJWithMTL("game/assets/CajaMadera/", "CajaMadera.obj", "CajaMadera.mtl", (object) => {
@@ -80,7 +83,7 @@
 			});
 			loadOBJWithMTL("game/assets/CajaFragil/", "BoxFragil.obj", "BoxFragil.mtl", (object) => {
 
-                /*Cajas*/
+				/*Cajas*/
 				boxPlayer = object.clone();
 				boxWin = object.clone();
 				boxGuard = object.clone();
@@ -178,7 +181,7 @@
 				var box92 = object.clone();
 				var box93 = object.clone();
 
-			/*Posicion z*/
+				/*Posicion z*/
 				box2.position.z = 60;
 				box3.position.z = 60;
 				box4.position.z = 60;
@@ -271,14 +274,14 @@
 				box91.position.z = -30;
 				box92.position.z = -30;
 				box93.position.z = -30;
-				
-				
+
+
 				/*Posicion z*/
 
 				/*Posicion x*/
 				box2.position.x = 20;
 				box3.position.x = 15;
-		        box4.position.x = 25;
+				box4.position.x = 25;
 				box5.position.x = 27;
 				box6.position.x = 27;
 				box7.position.x = 27;
@@ -369,9 +372,9 @@
 				box91.position.x = 0;
 				box92.position.x = -10;
 				box93.position.x = -20;
-				
+
 				/*Posicion x*/
-				
+
 				/*Posicion y*/
 				box78.position.y = 5;
 				box79.position.y = 5;
@@ -398,27 +401,27 @@
 				var box11 = object.clone();
 				var box12 = object.clone();
 				var box13 = object.clone();*/
-				scene.add(object,box2,box3 ,box4, box5, box6, box7, box8, box9, box10, box11, box12,
+				scene.add(object, box2, box3, box4, box5, box6, box7, box8, box9, box10, box11, box12,
 					box13, box14, box15, box17, box18, box19, box20, box21, box22, box23, box24,
-					box25, box26, box27, box28,box29,box30,box31,box32,box33,box34,box35,box36,box37,
-					box38,box39,box40,box41,box42,box43,box44,box45,box46,box47,box48,box49,box50,box51
-					,box52,box53,box54,box55,box56,box57,box58,box59,box60,box61,box62,box63,box64,box65,
-					box66,box67,box68,box69,box70,box71,box72,box73,box74,box75,box76,box77,box78,box79,
-					box80,box81,box82,box83,box84,box85,box86,box87,box88,box89,box90,box91,box92,box93);
+					box25, box26, box27, box28, box29, box30, box31, box32, box33, box34, box35, box36, box37,
+					box38, box39, box40, box41, box42, box43, box44, box45, box46, box47, box48, box49, box50, box51
+					, box52, box53, box54, box55, box56, box57, box58, box59, box60, box61, box62, box63, box64, box65,
+					box66, box67, box68, box69, box70, box71, box72, box73, box74, box75, box76, box77, box78, box79,
+					box80, box81, box82, box83, box84, box85, box86, box87, box88, box89, box90, box91, box92, box93);
 
-				collisionObjects.push(object,box2,box3 ,box4, box5, box6, box7, box8, box9, box10, box11, box12,
+				collisionObjects.push(object, box2, box3, box4, box5, box6, box7, box8, box9, box10, box11, box12,
 					box13, box14, box15, box17, box18, box19, box20, box21, box22, box23, box24,
-					box25, box26, box27, box28,box29,box30,box31,box32,box33,box34,box35,box36,box37,
-					box38,box39,box40,box41,box42,box43,box44,box45,box46,box47,box48,box49,box50,box51
-					,box52,box53,box54,box55,box56,box57,box58,box59,box60,box61,box62,box63,box64,box65,
-					box66,box67,box68,box69,box70,box71,box72,box73,box74,box75,box76,box77,box78,box79,
-					box80,box81,box82,box83,box84,box85,box86,box87,box88,box89,box90,box91,box92,box93);
+					box25, box26, box27, box28, box29, box30, box31, box32, box33, box34, box35, box36, box37,
+					box38, box39, box40, box41, box42, box43, box44, box45, box46, box47, box48, box49, box50, box51
+					, box52, box53, box54, box55, box56, box57, box58, box59, box60, box61, box62, box63, box64, box65,
+					box66, box67, box68, box69, box70, box71, box72, box73, box74, box75, box76, box77, box78, box79,
+					box80, box81, box82, box83, box84, box85, box86, box87, box88, box89, box90, box91, box92, box93);
 
 			});
 
 
 			isWorldReady[1] = true;
-				
+
 
 
 
@@ -440,7 +443,7 @@
 
 			render();
 
-		
+
 			document.addEventListener('keydown', onKeyDown);
 			document.addEventListener('keyup', onKeyUp);
 		});
@@ -468,95 +471,95 @@
 		}
 
 		function render() {
-			
+
 			requestAnimationFrame(render);
 			deltaTime = clock.getDelta();
-			
-		var playerMovX = 0;
-		var playerMovY = 0;
-		var playerMovZ = 0;
-		
 
-		var hiddenPlayer = false;
+			var playerMovX = 0;
+			var playerMovY = 0;
+			var playerMovZ = 0;
 
-		if(renamon.beggin){
-			renamon.setIndex(0);
-		}
-		else if(lockJump){
-			if (keys["A"]) {
-				playerMovX = -10;
+
+			var hiddenPlayer = false;
+
+			if (renamon.beggin) {
+				renamon.setIndex(0);
 			}
-			else if (keys["D"]) {
-				playerMovX = 10;
+			else if (lockJump) {
+				if (keys["A"]) {
+					playerMovX = -10;
+				}
+				else if (keys["D"]) {
+					playerMovX = 10;
+				}
+
+				if (!renamon.getIsJump(0)) {
+					lockJump = false;
+				}
+
+				if (!renamon.jumping && !renamon.isJump) {
+					renamon.resetAnimation = true;
+					renamon.jumping = true;
+					renamon.isJump = true;
+				}
+				renamon.setIndex(4);
+
 			}
-			
-			if(!renamon.getIsJump(0)){
-				lockJump = false;
+			else if (keys["E"]) {
+				//lockJump = true;
+
+			}
+			else if (keys["Q"]) {
+				hiddenPlayer = true;
+				if (keys["A"]) {
+					playerMovX = -3;
+					renamon.setIndex(3);
+				}
+				else if (keys["D"]) {
+					playerMovX = 3;
+					renamon.setIndex(3);
+				}
+				else if (keys["W"]) {
+					playerMovZ = -3;
+					renamon.setIndex(3);
+				}
+				else if (keys["S"]) {
+					playerMovZ = 3;
+					renamon.setIndex(3);
+				}
+				else {
+					renamon.setIndex(1);
+				}
+
+			}
+			else {
+				if (keys["A"]) {
+					playerMovX = -10;
+					renamon.setIndex(2);
+				}
+				else if (keys["D"]) {
+					playerMovX = 10;
+					renamon.setIndex(2);
+				}
+				else if (keys["W"]) {
+					playerMovZ = -10;
+					renamon.setIndex(2);
+				}
+				else if (keys["S"]) {
+					playerMovZ = 10;
+					renamon.setIndex(2);
+				}
+				else if (keys["P"]) {
+
+				}
+				else {
+					renamon.setIndex(1);
+				}
 			}
 
-			if(!renamon.jumping && !renamon.isJump){
-				renamon.resetAnimation = true;
-				renamon.jumping = true;
-				renamon.isJump = true;
-			}
-			renamon.setIndex(4);
-			
-		}
-		else if(keys["E"]){
-			//lockJump = true;
-			
-		}
-		else if(keys["Q"]){
-			hiddenPlayer = true;
-			if (keys["A"]) {
-				playerMovX = -3;
-				renamon.setIndex(3);
-			}
-			else if (keys["D"]) {
-				playerMovX = 3;
-				renamon.setIndex(3);
-			}
-			else if (keys["W"]) {
-				playerMovZ = -3;
-				renamon.setIndex(3);
-			}
-			else if (keys["S"]) {
-				playerMovZ = 3;
-				renamon.setIndex(3);
-			}
-			else{
-				renamon.setIndex(1);
-			}
-
-		}
-		else{
-			if (keys["A"]) {
-				playerMovX = -10;
-				renamon.setIndex(2);
-			}
-			else if (keys["D"]) {
-				playerMovX = 10;
-				renamon.setIndex(2);
-			}
-			else if (keys["W"]) {
-				playerMovZ = -10;
-				renamon.setIndex(2);
-			}
-			else if (keys["S"]) {
-				playerMovZ = 10;
-				renamon.setIndex(2);
-			}
-			else if (keys["P"]) {
-			
-			}
-			else{
-				renamon.setIndex(1);
-			}
-		}
-		
 
 			if (isWorldReady[0] && isWorldReady[1]) {
-				
+
 
 
 				boxWin.position.x = -3.5;
@@ -590,26 +593,54 @@
 						playerMovX = 0;
 						playerMovZ = 0;
 					}
-				} 
+				}
+
+				function spawnParticulas(target) {
+
+// create the particle variables
+
+particles = new THREE.Geometry();
+var pMaterial = new THREE.PointsMaterial({
+	color: 0xFFFFFF,
+	size: 1,
+	map: THREE.ImageUtils.loadTexture(
+	   "particula.png"
+	 ),
+	 blending: THREE.AdditiveBlending,
+	 transparent: true
+})
+}
 
 
-
-
-				if(detectCollision(boxPlayer, consumable1.object)){
+				if (detectCollision(boxPlayer, consumable1.object)) {
 					console.log("colide");
 					//scene.splice( scene.indexOf(consumable1.object), 1);
+					spawnParticulas(consumable1.object.position);
 					consumable1.object.position.y = -10;
 					puntuacion = 1;
-				
+					
+				}
+
+				if (reproducirParticulas) {
+
+					contadorAnim += deltaTime;
+					particleSystem.rotation.y += 0.01;
+
+					if (contadorAnim >= duracionParticula) {
+						contadorAnim = 0;
+						yaTerminamosLaClase = true;
+						reproducirParticulas = false;
+						scene.remove(particleSystem);
+					}
 				}
 
 
-				
-				if(detectCollision(boxPlayer,boxWin) && puntuacion == 1){
+
+				if (detectCollision(boxPlayer, boxWin) && puntuacion == 1) {
 					var finalizar = new Date()
 					var puntaje = (finalizar - nacimiento) * 0.0001;
-					
-					location.href='resultado.html?Puntaje='+puntaje+'&Win=Win&Level=1'
+
+					location.href = 'resultado.html?Puntaje=' + puntaje + '&Win=Win&Level=1'
 					//console.log("Win");
 				}
 
@@ -620,45 +651,45 @@
 				//	}
 				//}
 
-				if(renamon.catched){
+				if (renamon.catched) {
 					renamon.playAnimation(0, 0, 0);
-				}else{
+				} else {
 					renamon.playAnimation(playerMovX, playerMovY, playerMovZ);
 				}
-				
-				
+
+
 
 				guard.play();
 
 				boxGuard.position.x = guard.getPositionx();
-				if(guard.selectDir == 1 || guard.selectDir == 2){
+				if (guard.selectDir == 1 || guard.selectDir == 2) {
 					boxGuard.position.x += 8;
-				}else if(guard.selectDir == 0 || guard.selectDir == 3){
+				} else if (guard.selectDir == 0 || guard.selectDir == 3) {
 					boxGuard.position.x -= 8;
 				}
 
 				boxGuard.position.z = guard.getPositionz();
-				if(guard.selectDir == 4 || guard.selectDir == 5){
+				if (guard.selectDir == 4 || guard.selectDir == 5) {
 					boxGuard.position.z += 8;
-				}else if(guard.selectDir == 6 || guard.selectDir == 7){
+				} else if (guard.selectDir == 6 || guard.selectDir == 7) {
 					boxGuard.position.z -= 8;
 				}
 
 				boxGuard.position.y = 0;
-				if(hiddenPlayer){
+				if (hiddenPlayer) {
 					boxGuard.scale.set(2, 2, 0.8);
-				}else{
+				} else {
 					boxGuard.scale.set(3, 2, 1);
 				}
 				boxGuard.rotation.y = guard.modelRef.rotation.y + THREE.Math.degToRad(90);
 
-				if(detectCollision(boxPlayer,boxGuard)){
-					location.href='perdida.html'
+				if (detectCollision(boxPlayer, boxGuard)) {
+					location.href = 'perdida.html'
 					console.log("Lose");
 					guard.setCatch(true, renamon.getPositionx(), renamon.getPositionz());
 					renamon.setCatched(true);
 
-					
+
 				}
 
 				// camera.position.x = renamon.getPositionx();
@@ -671,11 +702,11 @@
 
 			renderer.render(scene, camera);
 		}
-		
+
 		function setupScene() {
-            var ancho = 1400;
-            var alto =  900;
-			var visibleSize = { width:ancho , height:alto };
+			var ancho = 1400;
+			var alto = 900;
+			var visibleSize = { width: ancho, height: alto };
 			clock = new THREE.Clock();
 			scene = new THREE.Scene();
 			camera = new THREE.PerspectiveCamera(75, visibleSize.width / visibleSize.height, 0.1, 100);
@@ -744,60 +775,60 @@
 </head>
 
 <body>
-    <div class="game-background-start" id="scene-section">
+	<div class="game-background-start" id="scene-section">
 		<audio id="miaudio" autoplay loop>
-            <source id="miaudio" src="game/assets/Audio/007.mp3" type="audio/mp3">
-        </audio>
-        <div class="menu-padre">
+			<source id="miaudio" src="game/assets/Audio/007.mp3" type="audio/mp3">
+		</audio>
+		<div class="menu-padre">
 			<audio style="display:none;">
 				<source src="~/Audios/NUMEROS/ONE.ogg" type="audio/ogg">
 			</audio>
-            <button id="pause" type="button"><img id="pausa" onmouseover="onHoverPausa();" onmouseout="offHoverPausa();"
-                    src="./imagenes//botones/pausa.png" height="60" width="100" /></button>
-            <div id="pausediv" class="game-pause">
-                <button id="reanudarbutton" type="button"><img id="reanudar"
-                        onmouseover="onHoverRenaudar();" onmouseout="offHoverRenaudar();" src="./imagenes//botones/reanudar.png"
-                        height="80" width="120" /></button>
-                <button id="configuracionbutton" type="button"><img id="settings"
-                        onmouseover="onHoverSettings();" onmouseout="offHoverSettings();"
-                        src="./imagenes//botones/ajustes.png" height="80" width="120" /></button>
-                <button onclick="location.href='menu.html'" id="salirbutton" type="button"><img id="salir"
-                        onmouseover="onHoverSalir();" onmouseout="offHoverSalir();"
-                        src="./imagenes//botones/salir.png" height="80" width="120" /></button>
+			<button id="pause" type="button"><img id="pausa" onmouseover="onHoverPausa();" onmouseout="offHoverPausa();"
+					src="./imagenes//botones/pausa.png" height="60" width="100" /></button>
+			<div id="pausediv" class="game-pause">
+				<button id="reanudarbutton" type="button"><img id="reanudar" onmouseover="onHoverRenaudar();"
+						onmouseout="offHoverRenaudar();" src="./imagenes//botones/reanudar.png" height="80"
+						width="120" /></button>
+				<button id="configuracionbutton" type="button"><img id="settings" onmouseover="onHoverSettings();"
+						onmouseout="offHoverSettings();" src="./imagenes//botones/ajustes.png" height="80"
+						width="120" /></button>
+				<button onclick="location.href='menu.html'" id="salirbutton" type="button"><img id="salir"
+						onmouseover="onHoverSalir();" onmouseout="offHoverSalir();" src="./imagenes//botones/salir.png"
+						height="80" width="120" /></button>
 
-            </div>
-			
-        </div>
+			</div>
 
-
+		</div>
 
 
 
-        
-    </div>
+
+
+
+	</div>
 
 
 </body>
 <script>
 	$(document).ready(function () {
-    $(".audio")[0].play();
-	debugger
-});
+		$(".audio")[0].play();
+		debugger
+	});
 
-    const div = document.querySelector(".game-pause");
-    const divbackground = document.querySelector(".game-background-start");
+	const div = document.querySelector(".game-pause");
+	const divbackground = document.querySelector(".game-background-start");
 
-    document.querySelector("#pause").addEventListener("click", () => {
-        div.classList.add("show_hide");
+	document.querySelector("#pause").addEventListener("click", () => {
+		div.classList.add("show_hide");
 
-    
 
-    });
+
+	});
 	document.getElementById("miaudio").volume = 0.02;
-      
-    document.querySelector("#reanudarbutton").addEventListener("click", () => {
-        div.classList.remove("show_hide");
-    });
+
+	document.querySelector("#reanudarbutton").addEventListener("click", () => {
+		div.classList.remove("show_hide");
+	});
 // document.querySelector("#pause").addEventListener("click", () => {
 // div.classList.remove("div_hide");
 //});
