@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compartir en FB</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./main.css">
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="hovers.js"></script>
+</head>
+
+<body>
+    <div class="game-background">
+        <div class="main-menu">
+            <img src="imagenes/win.png" style="margin-left:100%;" width="200" height="100"></img>
+        </div>
+        
+        <div class="Puntaje">
+            
+            <div class="Row">
+                <div class="col-10">
+                    <label for="Puntuaje" class="form-label"><b>Puntuación</b></label>
+                    <input name="Puntaje" id="Puntaje" type="number" class="form-control" disabled>
+                    <label for="Nivel" class="form-label"><b>Nivel</b></label>
+                    <input name="Nivel" id="Nivel" type="number" class="form-control" disabled>
+                </div>
+            </div>
+            <br>
+            <div class="row">     
+                <div class="col">
+                    <a class="btn btn-outline-warning" href="menu.html" role="button">Omitir</a>
+                </div>
+
+                <div class="col">
+                    <input type="button" class="btn btn-primary" onclick="enviarpuntaje()" value="Compartir">
+                </div>
+
+            </div>
+            
+            
+        </div>
+    </div>
+
+
+</body>
+<script>
+
+    function enviarpuntaje(){	
+        shareScore($("#Puntaje").val());		
+    }
+    
+
+    $(document).ready(function () {
+        let params = new URLSearchParams(location.search);
+
+        var Puntaje = params.get('Puntaje');
+        var Level = params.get('Level');
+ 
+        $("#Puntaje").val(Puntaje);
+        $("#Nivel").val(Level);
+    });
+
+
+    window.fbAsyncInit = function() {
+     FB.init({
+        appId      : '693788108832171',
+        xfbml      : true,
+        version    : 'v2.9'
+     });
+     FB.AppEvents.logPageView();
+}   ;
+
+(   function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    function shareScore(score){
+        FB.ui({
+            method: 'share',
+            href: 'https://google.com',
+            hashtag: "#pruebaApi",
+            quote: "num: " + score
+        }, function(response){});
+    }
+
+
+</script>
+
+</html>
