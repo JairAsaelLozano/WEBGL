@@ -25,6 +25,7 @@
                     <tr>
                       <th>Nombre</th>
                       <th>Puntaje</th>
+                      <th>Nivel</th>
                     
                     </tr>
                     </table>
@@ -53,7 +54,7 @@ $(document).ready(function () {
 					var data2 = JSON.parse(data);
                     
                     data2.forEach(function (key, value) {
-                        $("#table-puntaje").append('<tr><th>'+data2[value].nombre+'</th><th>'+data2[value].puntaje+'</th></tr>')
+                        $("#table-puntaje").append('<tr><th>'+data2[value].nombre+'</th><th>'+data2[value].puntaje+'</th><th>'+data2[value].nivel+'</th></tr>')
                      
                         });
 				

@@ -15,14 +15,16 @@
 <body>
     <div class="game-background">
         <div class="main-menu">
-
+            <img src="imagenes/win.png" style="margin-left:100%;" width="200" height="100"></img>
         </div>
+        
         <div class="Puntaje">
+            
             <label style="color:aliceblue;"><b>Escribe tu nombre</b></label>
             <input name="Nombre" id="Nombre" type="text">
             <input name="Puntaje" id="Puntaje" type="number" disabled>
+            <input name="Nivel" id="Nivel" type="hidden">
             <button onclick="enviarpuntaje()">Enviar</button>
-
         </div>
     </div>
 
@@ -33,8 +35,9 @@
      
             var dataToSend = { action: "addPuntaje", 
 								name:  $("#Nombre").val(),
-								puntaje:  $("#Puntaje").val()};
-
+								puntaje:  $("#Puntaje").val(),
+                                nivel:  $("#Nivel").val()};
+                       
 			
 				$.ajax({
 					url: "./conexion.php",
@@ -55,9 +58,12 @@
     $(document).ready(function () {
         let params = new URLSearchParams(location.search);
 
-        var contract = params.get('Puntaje');
+        var Puntaje = params.get('Puntaje');
+        var Level = params.get('Level');
  
-        $("#Puntaje").val(contract);
+        $("#Puntaje").val(Puntaje);
+        $("#Nivel").val(Level);
+        
 
 
         
