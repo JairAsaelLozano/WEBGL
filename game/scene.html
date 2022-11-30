@@ -245,7 +245,7 @@
 
 			var loader = new THREE.FBXLoader();
 			loader.load('assets/Personaje/Sad Idle.fbx', function (personaje) {
-				debugger
+				//debugger
 				personaje.mixer = new THREE.AnimationMixer(personaje);
 
 				mixers.push(personaje.mixer);
@@ -277,7 +277,7 @@
 				//persona.add(camera);
 				scene.add(persona);
 
-				debugger;
+				//debugger;
 
 
 			});
@@ -376,7 +376,7 @@
 
 		function setupScene() {
 			var visibleSize = { width: width , height: height  };
-			debugger
+			//debugger
 			clock = new THREE.Clock();
 			scene = new THREE.Scene();
 			camera = new THREE.PerspectiveCamera(75, visibleSize.width / visibleSize.height, 0.1, 100);

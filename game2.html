@@ -39,6 +39,7 @@
 		var collisionObjects = [];
 		var isWorldReady = [false, false];
 		var jet;
+		var puntuacion = 0;
 
 		var nacimiento = new Date()
 		
@@ -836,12 +837,13 @@
 					}
 				} 
 
+				
 				if(detectCollision(boxPlayer, consumable1.object)){
 					console.log("colide");
 					//scene.splice( scene.indexOf(consumable1.object), 1);
 					consumable1.object.position.y = -10;
 					puntuacion = 1;
-					debugger
+					//debugger
 				}
 
 				if(detectCollision(boxPlayer,boxWin) && puntuacion == 1){
@@ -1046,7 +1048,7 @@
     
 
     });
-	document.getElementById("miaudio").volume = 0.02;
+	document.getElementById("miaudio").volume = 0.01;
 
     document.querySelector("#reanudarbutton").addEventListener("click", () => {
         div.classList.remove("show_hide");

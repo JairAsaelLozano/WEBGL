@@ -40,6 +40,7 @@
 		var collisionObjects = [];
 		var isWorldReady = [false, false];
 		var jet;
+		var puntuacion = 0;
 
 	
 		var nacimiento = new Date()
@@ -674,8 +675,8 @@
 
 			guard1.setPositions([20.5, -5.0]);
 			guard1.setPositions([-18.5, -5.0]);
-			guard1.setPositions([-18.5, -10.0]);
-			guard1.setPositions([20.5, -10.0]);
+			guard1.setPositions([-18.5, 10.0]);
+			guard1.setPositions([20.5, 10.0]);
 			guard1.speed = 7;
 			guard1.patrol = 2;
 
@@ -688,7 +689,7 @@
 			guard2.speed = 7;
 			guard2.patrol = 2;
 
-			guard3.setModel('SkullMeramon/chr406 with animations.fbx', guard3, 20.5, 0.0, 37);
+			guard3.setModel('SkullMeramon/chr406 with animations.fbx', guard3, 20.5, 0.0, 37.0);
 
 			guard3.setPositions([20.5, 37.0]);
 			guard3.setPositions([0.3, 37.0]);
@@ -880,26 +881,28 @@
 						playerMovZ = 0;
 					}
 				} 
+
+				
 				if(detectCollision(boxPlayer, consumable1.object)){
 					console.log("colide");
 					//scene.splice( scene.indexOf(consumable1.object), 1);
 					consumable1.object.position.y = -10;
 					puntuacion = 1;
-					debugger
+					//debugger
 				}
 				if(detectCollision(boxPlayer, consumable2.object)){
 					console.log("colide");
 					//scene.splice( scene.indexOf(consumable1.object), 1);
 					consumable2.object.position.y = -10;
 					movimientoacelerado = 1;
-					debugger
+					//debugger
 				}
 				if(detectCollision(boxPlayer, consumable3.object)){
 					console.log("colide");
 					//scene.splice( scene.indexOf(consumable1.object), 1);
 					consumable3.object.position.y = -15;
 					isclockactive = 1;
-					debugger
+					//debugger
 				}
 				if(detectCollision(boxPlayer,boxWin) && puntuacion == 1){
 					var finalizar = new Date()
@@ -1141,7 +1144,7 @@
     
 
     });
-	document.getElementById("miaudio").volume = 0.02;
+	document.getElementById("miaudio").volume = 0.01;
 
     document.querySelector("#reanudarbutton").addEventListener("click", () => {
         div.classList.remove("show_hide");
