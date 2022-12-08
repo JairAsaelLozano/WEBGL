@@ -8,13 +8,13 @@
     getPuntaje();
 
 	function connect() {
-		$databasehost = "localhost:3306";
+		$databasehost = "159.223.191.152";
+		$databaseuser = "remote";
+		$databasepass = "super-secret";
 		$databasename = "webgl";
-		$databaseuser = "root";
-		$databasepass = "35652515";
 
 		$mysqli = new mysqli($databasehost, $databaseuser, $databasepass, $databasename);
-		if ($mysqli->connect_errno) {
+		if ($mysqli->connect_error) {
 			echo "Problema con la conexion a la base de datos";
 		}
 		return $mysqli;
@@ -28,7 +28,7 @@
 		$nivel = $_POST["nivel"];
 		$mysqli = connect();
 
-		$result = $mysqli->query("INSERT INTO puntaje(nombre, puntaje, nivel) values('".$name."','".$puntaje."','".$nivel."')");	
+		$result = $mysqli->query("INSERT INTO puntaje(nombre, puntaje, nivel) values('".$name."','".$puntaje."',".$nivel.")");	
 		
 		if (!$result) {
 			echo "Problema al hacer un query: " . $mysqli->error;								
